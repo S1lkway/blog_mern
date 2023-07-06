@@ -50,6 +50,24 @@ const registerUser = asyncHandler(async (req, res) => {
 // @desc Authenticate(login) user
 // @route POST /api/users/login
 // @access Puplic
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body// Check for user mail
+  const user = await User.findOne({ email })
+  // console.log(user)
+
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user.id),
+    })
+  } else {
+    res.status(400)
+    throw new Error('Invalid credentials')
+  }
+})
+
 
 // @desc Get user data
 // @route GET /api/users/me
@@ -64,4 +82,5 @@ const generateToken = (id) => {
 
 module.exports = {
   registerUser,
+  loginUser
 }
