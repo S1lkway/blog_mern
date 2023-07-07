@@ -9,6 +9,8 @@ connectDB()
 
 const app = express()
 
+
+//TODO Middlewares
 /* Used to parse incoming requests with JSON payloads */
 app.use(express.json())
 /* Used to parse incoming requests with URL-encoded payloads 
@@ -16,12 +18,11 @@ The extended option determines how the URL-encoded data is parsed. When set to f
 app.use(express.urlencoded({ extended: false }))
 
 
-//ROUTES
+//TODO  ROUTES  
+// routes for registration, edit user and authorization
 app.use('/api/users', require('./routes/userRoutes'))
-
 
 /* Provides a basic error handling mechanism in Express that sends a JSON response with an error message and, optionally, the stack trace */
 app.use(errorHandler)
 
-
-app.listen(port, () => console.log(`Server started on port ${port}`))
+app.listen(port, () => console.log(`Server started on port ${port}`.yellow.underline))
