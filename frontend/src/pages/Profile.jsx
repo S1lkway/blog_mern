@@ -81,7 +81,7 @@ function Profile() {
 
         <div className="form-group">
           <button type='submit' className='btn btn-block'>
-            Save
+            Save changes
           </button>
         </div>
 
