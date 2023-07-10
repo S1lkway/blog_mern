@@ -1,20 +1,39 @@
-import { useState } from 'react'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
-// import { toast } from 'react-toastify'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { FaUserEdit } from 'react-icons/fa'
-// import { register, reset } from '../features/auth/authSlice'
-// import Spinner from '../components/Spinner'
+import { edit, reset } from '../features/auth/authSlice'
+import Spinner from '../components/Spinner'
 
 function Profile() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    name: user.name,
+    email: user.email,
     password: '',
     password2: ''
   })
 
   const { name, email, password, password2 } = formData
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+
+    if (isSuccess) {
+      toast.success('Credentials changed')
+    }
+
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch])
+
+
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -25,6 +44,23 @@ function Profile() {
 
   const onSubmit = (e) => {
     e.preventDefault()
+
+    if (password !== password2) {
+      toast.error('Password do not match')
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+      }
+
+      //We send data from form to authSlice to register function and there to server by authService
+      dispatch(edit(userData))
+    }
+  }
+
+  if (isLoading) {
+    return <Spinner />
   }
 
 
@@ -55,7 +91,7 @@ function Profile() {
             name='email'
             value={email}
             placeholder='Enter your email'
-            onChange={onChange}
+            readonly
           />
         </div>
         <div className="form-group">
@@ -64,7 +100,7 @@ function Profile() {
             id="password"
             name='password'
             value={password}
-            placeholder='Enter password'
+            placeholder='Enter the new password'
             onChange={onChange}
           />
         </div>
@@ -74,7 +110,7 @@ function Profile() {
             id="password2"
             name='password2'
             value={password2}
-            placeholder='Confirm password'
+            placeholder='Confirm the new password'
             onChange={onChange}
           />
         </div>

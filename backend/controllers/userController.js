@@ -72,7 +72,7 @@ const loginUser = asyncHandler(async (req, res) => {
 //TODO @desc Edit user data
 //TODO @route PUT /api/users/edit
 //TODO @access Private
-const updateUser = asyncHandler(async (req, res) => {
+const editUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   //Get user id from token after login
   const userId = req.user._id;
@@ -98,6 +98,7 @@ const updateUser = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      token: generateToken(user.id),
     });
   } else {
     res.status(404);
@@ -125,5 +126,5 @@ module.exports = {
   registerUser,
   loginUser,
   getUser,
-  updateUser,
+  editUser,
 }
