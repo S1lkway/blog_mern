@@ -30,7 +30,9 @@ const createArticle = asyncHandler(async (req, res) => {
 //* @route GET /api/articles
 //* @access Private
 const getArticles = asyncHandler(async (req, res) => {
-  res.status(200)
+  const articles = await Article.find({ user: req.user.id })
+
+  res.status(200).json(articles)
 })
 
 //* @desc Edit article
@@ -44,7 +46,29 @@ const editArticle = asyncHandler(async (req, res) => {
 //* @route DELETE /api/articles:id
 //* @access Private
 const deleteArticle = asyncHandler(async (req, res) => {
-  res.status(200)
+
+  const article = await Article.findById(req.params.id)
+  /// Check for article
+  if (!article) {
+    res.status(400)
+    throw new Error('Article is not found')
+  }
+
+  /// Check for user
+  if (!req.user) {
+    res.status(401)
+    throw new Error('User is not found')
+  }
+
+  /// Make sure the logged in user matches the article user
+  if (article.user.toString() !== req.user.id) {
+    res.status(401)
+    throw new Error('User is not authorized')
+  }
+
+  await article.deleteOne()
+
+  res.status(200).json({ id: req.params.id })
 })
 
 module.exports = {
