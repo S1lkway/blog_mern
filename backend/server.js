@@ -21,6 +21,8 @@ app.use(express.urlencoded({ extended: false }))
 //TODO  ROUTES  
 // routes for registration, edit user and authorization
 app.use('/api/users', require('./routes/userRoutes'))
+// routes for creating, deleting and edit articles
+app.use('/api/articles', require('./routes/articleRoutes'))
 
 /* Provides a basic error handling mechanism in Express that sends a JSON response with an error message and, optionally, the stack trace */
 app.use(errorHandler)

@@ -1,10 +1,8 @@
-//* Requests for data to backend *//
-
 import axios from 'axios'
 
 const API_URL = 'api/users/'
 
-//TODO Register user
+//* REGISTER USER
 const register = async (userData) => {
   const response = await axios.post(API_URL, userData)
 
@@ -14,7 +12,7 @@ const register = async (userData) => {
   return response.data
 }
 
-//TODO Login user
+//* LOGIN USER
 const login = async (userData) => {
   const response = await axios.post(API_URL + 'login', userData)
 
@@ -24,9 +22,9 @@ const login = async (userData) => {
   return response.data
 }
 
-//TODO Edit user
+//* EDIT USER
 const edit = async (userData, token) => {
-
+  /// Put token to config before 
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -41,7 +39,7 @@ const edit = async (userData, token) => {
   return response.data
 }
 
-//TODO Logout user
+//* LOGOUT USER
 const logout = () => {
   localStorage.removeItem('user')
 }

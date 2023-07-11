@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authService'
 
-//TODO Get user from localStotage
+/// Get user from localStotage
 const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
@@ -12,7 +12,7 @@ const initialState = {
   message: ''
 }
 
-//TODO Register user
+//* REGISTER USER
 export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
   try {
     return await authService.register(user)
@@ -22,7 +22,7 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
   }
 })
 
-//TODO Login user
+//* LOGIN USER
 export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     return await authService.login(user)
@@ -32,7 +32,7 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   }
 })
 
-//TODO Edit user
+//* EDIT USER
 export const edit = createAsyncThunk(
   'auth/edit',
   async (user, thunkAPI) => {
@@ -45,13 +45,13 @@ export const edit = createAsyncThunk(
     }
   })
 
-//TODO Logout user
+//* LOGOUT USER
 export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout()
 })
 
 
-//TODO AUTHSLICE //
+//* AUTHSLICE 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -65,7 +65,7 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      //* REGISTER
+      /// Register
       .addCase(register.pending, (state) => {
         state.isLoading = true
       })
@@ -82,7 +82,7 @@ export const authSlice = createSlice({
         state.message = action.payload
         state.user = null
       })
-      //* LOGIN
+      /// Login
       .addCase(login.pending, (state) => {
         state.isLoading = true
       })
@@ -97,7 +97,7 @@ export const authSlice = createSlice({
         state.message = action.payload
         state.user = null
       })
-      //* EDIT
+      /// Edit
       .addCase(edit.pending, (state) => {
         state.isLoading = true
       })
@@ -113,7 +113,7 @@ export const authSlice = createSlice({
         state.message = action.payload
         state.user = user
       })
-      //* LOGOUT
+      /// Logout
       .addCase(logout.fulfilled, (state) => {
         state.user = null
       })

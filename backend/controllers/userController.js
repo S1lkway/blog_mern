@@ -3,9 +3,9 @@ const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
 
-//TODO @desc Register user  */
-//TODO @route POST /api/users
-//TODO @access Puplic
+//* @desc Register user  */
+//* @route POST /api/users
+//* @access Puplic
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body
 
@@ -45,9 +45,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 })
 
-//TODO @desc Authenticate(login) user
-//TODO @route POST /api/users/login
-//TODO @access Puplic
+//* @desc Authenticate(login) user
+//* @route POST /api/users/login
+//* @access Puplic
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body// Check for user mail
   const user = await User.findOne({ email })
@@ -60,8 +60,6 @@ const loginUser = asyncHandler(async (req, res) => {
       token: generateToken(user.id),
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-
-
     })
   } else {
     res.status(400)
@@ -69,9 +67,9 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 })
 
-//TODO @desc Edit user data
-//TODO @route PUT /api/users/edit
-//TODO @access Private
+//* @desc Edit user data
+//* @route PUT /api/users/edit
+//* @access Private
 const editUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   //Get user id from token after login
@@ -107,15 +105,15 @@ const editUser = asyncHandler(async (req, res) => {
 });
 
 
-//TODO @desc Get user data 
-//TODO @route GET /api/users/me
-//TODO @access Private
+//* @desc Get user data 
+//* @route GET /api/users/me
+//* @access Private
 const getUser = asyncHandler(async (req, res) => {
   res.status(200).json(req.user)
 })
 
 
-//TODO Generate token 
+//* Generate token 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '1d',
