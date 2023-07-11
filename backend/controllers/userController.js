@@ -3,9 +3,9 @@ const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
 
-//* @desc Register user
-//* @route POST /api/users
-//* @access Puplic
+//* desc Register user
+//* route POST /api/users
+//* access Puplic
 const registerUser = asyncHandler(async (req, res) => {
 
   const { name, email, password } = req.body
@@ -46,9 +46,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 })
 
-//* @desc Authenticate(login) user
-//* @route POST /api/users/login
-//* @access Puplic
+//* desc Authenticate(login) user
+//* route POST /api/users/login
+//* access Puplic
 const loginUser = asyncHandler(async (req, res) => {
 
   const { email, password } = req.body
@@ -70,9 +70,9 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 })
 
-//* @desc Edit user data
-//* @route PUT /api/users/edit
-//* @access Private
+//* desc Edit user data
+//* route PUT /api/users/edit
+//* access Private
 const editUser = asyncHandler(async (req, res) => {
 
   const { name, email, password } = req.body;
@@ -107,9 +107,9 @@ const editUser = asyncHandler(async (req, res) => {
   }
 });
 
-//* @desc Get user data 
-//* @route GET /api/users/me
-//* @access Private
+//* desc Get user data 
+//* route GET /api/users/me
+//* access Private
 const getUser = asyncHandler(async (req, res) => {
   res.status(200).json(req.user)
 })
