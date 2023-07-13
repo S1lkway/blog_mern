@@ -43,13 +43,14 @@ h3 {
   text-align: center;
 }
 
+/** HEADER **/
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;
   border-bottom: 1px solid #e6e6e6;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .header ul {
@@ -75,6 +76,9 @@ h3 {
   margin-right: 5px;
 }
 
+/** ------------------------------ */
+
+
 .heading {
   font-size: 2rem;
   font-weight: 700;
@@ -86,30 +90,78 @@ h3 {
   color: #828282;
 }
 
+
+/** ARTICLES PAGES **/
 .articles {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* grid-template-columns: repeat(2, 1fr); */
+  grid-template-columns: 1fr;
   gap: 10px;
 }
 
 .article {
   background-color: #f4f4f4;
   margin: 10px 0;
-  padding: 20px 0 10px;
+  padding: 30px 15px 10px;
   position: relative;
+  text-align: left;
 }
 
 .article .close {
   position: absolute;
   top: 10px;
-  right: 15px;
+  right: 10px;
+
+}
+
+.article .closeButton {
+  margin-left: 10px;
+  font-size: 22px;
   cursor: pointer;
   border: none;
   background: none;
 }
 
-.form,
+.closeButton:hover {
+  color: #777;
+}
+
+.articleName {
+  margin-top: 5px;
+}
+
+.articleCreatedAt {
+  margin-top: 10px;
+  text-align: right;
+  color: #777;
+
+}
+
+.createLink {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createLink ul,
+h1 {
+  list-style: none;
+  margin: 0;
+}
+
+.createLink ul li a:hover {
+  color: #777;
+}
+
+/** ------------------------------ */
+
 .content {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/** FORM */
+.form {
   width: 70%;
   margin: 0 auto;
 }
@@ -136,6 +188,9 @@ h3 {
   margin: 0 0 5px 3px;
 }
 
+/** ------------------------------ */
+
+/** BUTTON BTN */
 .btn {
   padding: 10px 20px;
   border: 1px solid #000;
@@ -170,6 +225,9 @@ h3 {
   transform: scale(0.98);
 }
 
+/** ------------------------------ */
+
+/** SPINNER */
 .loadingSpinnerContainer {
   position: fixed;
   top: 0;
@@ -191,6 +249,8 @@ h3 {
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }
+
+/** ------------------------------ */
 
 @keyframes spin {
   0% {

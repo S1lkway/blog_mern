@@ -1,32 +1,36 @@
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import ArticleForm from '../components/ArticleForm'
+import { FaSquarePlus } from 'react-icons/fa6'
+import { FaAlignJustify } from "react-icons/fa";
 import ArticleItem from '../components/ArticleItem'
 import Spinner from '../components/Spinner'
 import { getArticles, reset } from '../features/articles/articleSlice'
 
 
 function Articles() {
-
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  //* CONSTANTS FOR DATA
   const { user } = useSelector((state) => state.auth)
   const { articles, isLoading, isError, message } = useSelector(
     (state) => state.articles
   )
+  // const { articles, isError, message } = useSelector(
+  //   (state) => state.articles
+  // )
 
+  //* GET ARTICLES DATA AND RESET IN REDUX AFTER SUBMIT
   useEffect(() => {
     if (isError) {
       console.log(message)
     }
-
     if (!user) {
       navigate('/login')
     }
-
+    /// Get articles data
     dispatch(getArticles())
-
     return () => {
       dispatch(reset())
     }
@@ -37,23 +41,46 @@ function Articles() {
     return <Spinner />
   }
 
+  // ------------------------------------------------------------------ //
+
   return (
     <>
-      <ArticleForm />
+
 
       <section className='content'>
         {articles.length > 0 ? (
           <>
-            <h3>My articles</h3>
+            <div className="createLink">
+              <h1>
+                <FaAlignJustify /> My articles
+              </h1>
+              <ul>
+                <li>
+                  <Link to='/articles/create'>
+                    <FaSquarePlus /> Create Article
+                  </Link>
+                </li>
+              </ul>
+            </div>
             <div className='articles'>
-
               {articles.map((article) => (
                 <ArticleItem key={article._id} article={article} />
               ))}
             </div>
           </>
         ) : (
-          <h3>You have not any articles</h3>
+          <>
+            <div className="createLink">
+              <h1>You have not articles</h1>
+              <ul>
+                <li>
+                  <Link to='/articles/create'>
+                    <FaSquarePlus /> Create Article
+                  </Link>
+                </li>
+              </ul>
+            </div></>
+
         )}
       </section>
     </>

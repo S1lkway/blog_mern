@@ -4,47 +4,45 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { FaUserEdit } from 'react-icons/fa'
 import { edit, reset } from '../features/auth/authSlice'
-import Spinner from '../components/Spinner'
+// import Spinner from '../components/Spinner'
 
 function Profile() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
-
+  //* CONSTANTS FOR DATA
+  // const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+  const { user, isError, isSuccess, message } = useSelector((state) => state.auth)
   const [formData, setFormData] = useState({
     name: user.name,
     email: user.email,
     password: '',
     password2: ''
   })
-
   const { name, email, password, password2 } = formData
 
+  //* RESET USER DATA IN REDUX AFTER SUBMIT
   useEffect(() => {
     if (isError) {
       toast.error(message)
     }
-
     if (isSuccess) {
       toast.success('Credentials changed')
     }
-
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
-
-
+  //* EDIT formData BY CHANGING DATA IN FORM FIELDS
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }))
   }
-
+  //* EDIT USER DATA BY SUBMIT
   const onSubmit = (e) => {
     e.preventDefault()
-
+    ///Check passwords fields
     if (password !== password2) {
       toast.error('Password do not match')
     } else {
@@ -53,16 +51,16 @@ function Profile() {
         email,
         password,
       }
-
-      //We send data from form to authSlice to register function and there to server by authService
+      ///We send data from form to authSlice to register function and there to server by authService
       dispatch(edit(userData))
     }
   }
 
-  if (isLoading) {
-    return <Spinner />
-  }
+  // if (isLoading) {
+  //   return <Spinner />
+  // }
 
+  // ------------------------------------------------------------------ //
 
   return <>
     <section className='heading'>

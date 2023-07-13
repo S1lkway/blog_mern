@@ -77,6 +77,7 @@ export const articleSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      /// createArticles
       .addCase(createArticle.pending, (state) => {
         state.isLoading = true
       })
@@ -90,6 +91,7 @@ export const articleSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      /// getArticles
       .addCase(getArticles.pending, (state) => {
         state.isLoading = true
       })
@@ -103,6 +105,7 @@ export const articleSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      /// deleteArticle
       .addCase(deleteArticle.pending, (state) => {
         state.isLoading = true
       })

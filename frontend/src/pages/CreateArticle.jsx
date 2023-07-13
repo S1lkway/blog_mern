@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { createArticle } from '../features/articles/articleSlice'
 import { toast } from 'react-toastify'
 
-function ArticleForm() {
+function CreateArticle() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -52,9 +52,13 @@ function ArticleForm() {
 
   return (
     <>
-      <h3>
-        Create article
-      </h3>
+
+      <section className='heading'>
+        <h1>
+          Create article
+        </h1>
+        <p>Add name and text of article</p>
+      </section>
       <section className='form'>
         <form onSubmit={onSubmit}>
           <div className="form-group">
@@ -91,4 +95,4 @@ function ArticleForm() {
   )
 }
 
-export default ArticleForm
+export default CreateArticle
