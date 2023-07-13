@@ -49,7 +49,23 @@ export const getArticles = createAsyncThunk(
 )
 
 //* DELETE USER ARTICLE
-export const deleteArticle = createAsyncThunk()
+export const deleteArticle = createAsyncThunk(
+  'articles/delete',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await articleService.deleteArticle(id, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 
 
 //* ARTICLESLICE
@@ -83,6 +99,21 @@ export const articleSlice = createSlice({
         state.articles = action.payload
       })
       .addCase(getArticles.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(deleteArticle.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteArticle.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.articles = state.articles.filter(
+          (article) => article._id !== action.payload.id
+        )
+      })
+      .addCase(deleteArticle.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -24,10 +24,22 @@ const getArticles = async (token) => {
   return response.data
 }
 
+//* DELETE USER ARTICLE
+const deleteArticle = async (articleId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.delete(API_URL + articleId, config)
+  return response.data
+}
+
 
 const articleService = {
   createArticle,
-  getArticles
+  getArticles,
+  deleteArticle
 }
 
 export default articleService
