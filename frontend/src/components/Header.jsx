@@ -1,4 +1,4 @@
-import { FaBookOpen, FaSignInAlt, FaSignOutAlt, FaUserPlus, FaUserEdit } from 'react-icons/fa'
+import { FaComments, FaBookOpen, FaSignInAlt, FaSignOutAlt, FaUserPlus, FaUserEdit } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
@@ -18,12 +18,17 @@ function Header() {
     <header className='header'>
       <div className='logo'>
         <Link to='/'>
-          <h4><i>< FaBookOpen /> Articles</i></h4>
+          <h4><i>< FaComments /> Dashboard </i></h4>
         </Link>
       </div>
       <ul>
         {user ? (
           <>
+            <li>
+              <Link to='/articles'>
+                <FaBookOpen /> Articles
+              </Link>
+            </li>
             <li>
               <Link to='/profile'>
                 <FaUserEdit /> Profile

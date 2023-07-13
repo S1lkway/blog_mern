@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
+import Articles from './pages/Articles';
 
 function App() {
   return (
@@ -18,10 +19,11 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/articles' element={<Articles />} />
           </Routes>
         </div>
       </Router>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 function Dashboard() {
   return (
-    <div>Articles</div>
+    <div>Dashboard</div>
   )
 }
 
