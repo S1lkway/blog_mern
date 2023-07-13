@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { createArticle } from '../features/articles/articleSlice'
+import { createArticle } from '../../features/articles/articleSlice'
 import { toast } from 'react-toastify'
 
 function CreateArticle() {

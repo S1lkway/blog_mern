@@ -30,7 +30,7 @@ const createArticle = asyncHandler(async (req, res) => {
 //* route GET /api/articles
 //* access Private
 const getArticles = asyncHandler(async (req, res) => {
-  const articles = await Article.find({ user: req.user.id })
+  const articles = await Article.find({ user: req.user.id }).sort({ createdAt: -1 })
 
   res.status(200).json(articles)
 })

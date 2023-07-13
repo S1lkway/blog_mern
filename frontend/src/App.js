@@ -6,8 +6,8 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
-import Articles from './pages/Articles';
-import CreateArticle from './pages/CreateArticle';
+import Articles from './pages/Articles/Articles';
+import CreateArticle from './pages/Articles/CreateArticle';
 
 function App() {
   return (

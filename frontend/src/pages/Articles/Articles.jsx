@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { FaSquarePlus } from 'react-icons/fa6'
 import { FaAlignJustify } from "react-icons/fa";
-import ArticleItem from '../components/ArticleItem'
-import Spinner from '../components/Spinner'
-import { getArticles, reset } from '../features/articles/articleSlice'
+import ArticleItem from '../../components/ArticleItem'
+import Spinner from '../../components/Spinner'
+import { getArticles, reset } from '../../features/articles/articleSlice'
 
 
 function Articles() {
@@ -71,7 +71,7 @@ function Articles() {
         ) : (
           <>
             <div className="createLink">
-              <h1>You have not articles</h1>
+              <h1>You have no articles</h1>
               <ul>
                 <li>
                   <Link to='/articles/create'>

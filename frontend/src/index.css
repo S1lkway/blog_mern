@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
+/** BASIC TAGS */
 * {
   margin: 0;
   padding: 0;
@@ -42,6 +43,41 @@ h3 {
   padding: 0 20px;
   text-align: center;
 }
+
+/** ------------------------------ */
+
+/** REACTMODAL WINDOW */
+.mymodal {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* border: 1px solid #ccc; */
+  background: #fff;
+  overflow: auto;
+  border-radius: 5px;
+  outline: none;
+  padding: 20px;
+}
+
+.myoverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(209, 205, 205, 0.75);
+}
+
+.modalButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 15px;
+}
+
+/** ------------------------------ */
+
 
 /** HEADER **/
 .header {
@@ -111,19 +147,19 @@ h3 {
   position: absolute;
   top: 10px;
   right: 10px;
-
 }
 
-.article .closeButton {
+.article .articleButton {
   margin-left: 10px;
   font-size: 22px;
   cursor: pointer;
   border: none;
   background: none;
+  color: #777;
 }
 
-.closeButton:hover {
-  color: #777;
+.articleButton:hover {
+  color: #000000;
 }
 
 .articleName {
