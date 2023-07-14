@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { FaPlus } from 'react-icons/fa6'
 import { createArticle } from '../../features/articles/articleSlice'
 import { toast } from 'react-toastify'
 
@@ -52,15 +53,15 @@ function CreateArticle() {
 
   return (
     <>
-
       <section className='heading'>
         <h1>
-          Create article
+          <FaPlus />Create article
         </h1>
         <p>Add name and text of article</p>
       </section>
       <section className='form'>
         <form onSubmit={onSubmit}>
+
           <div className="form-group">
             <input
               type="text" className='form-control'
@@ -71,6 +72,7 @@ function CreateArticle() {
               onChange={onChange}
             />
           </div>
+
           <div className="form-group">
             <textarea
               type="text" className='form-control'
@@ -79,7 +81,7 @@ function CreateArticle() {
               value={text}
               placeholder='Enter text of article'
               onChange={onChange}
-              rows={4}
+              rows={10}
             />
           </div>
 

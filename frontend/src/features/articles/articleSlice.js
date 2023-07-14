@@ -48,6 +48,20 @@ export const getArticles = createAsyncThunk(
   }
 )
 
+//* EDIT USER ARTICLE
+// export const editArticle = createAsyncThunk(
+//   'articles/edit',
+//   async (id, thunkAPI) => {
+//     try {
+//       const token = thunkAPI.getState().auth.user.token
+//       return await articleService.editArticle(user, token)
+//     } catch (error) {
+//       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+//       return thunkAPI.rejectWithValue(message)
+//     }
+//   }
+// )
+
 //* DELETE USER ARTICLE
 export const deleteArticle = createAsyncThunk(
   'articles/delete',

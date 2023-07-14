@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { FaSquarePlus } from 'react-icons/fa6'
+import { FaPlus } from 'react-icons/fa6'
 import { FaAlignJustify } from "react-icons/fa";
+
 import ArticleItem from '../../components/ArticleItem'
 import Spinner from '../../components/Spinner'
+
 import { getArticles, reset } from '../../features/articles/articleSlice'
 
 
@@ -36,7 +38,7 @@ function Articles() {
     }
   }, [user, navigate, isError, message, dispatch])
 
-
+  //* LOADING SPINNER
   if (isLoading) {
     return <Spinner />
   }
@@ -45,8 +47,6 @@ function Articles() {
 
   return (
     <>
-
-
       <section className='content'>
         {articles.length > 0 ? (
           <>
@@ -57,11 +57,12 @@ function Articles() {
               <ul>
                 <li>
                   <Link to='/articles/create'>
-                    <FaSquarePlus /> Create Article
+                    <FaPlus /> Create Article
                   </Link>
                 </li>
               </ul>
             </div>
+
             <div className='articles'>
               {articles.map((article) => (
                 <ArticleItem key={article._id} article={article} />
@@ -75,12 +76,12 @@ function Articles() {
               <ul>
                 <li>
                   <Link to='/articles/create'>
-                    <FaSquarePlus /> Create Article
+                    <FaPlus /> Create Article
                   </Link>
                 </li>
               </ul>
-            </div></>
-
+            </div>
+          </>
         )}
       </section>
     </>

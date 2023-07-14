@@ -24,7 +24,18 @@ const getArticles = async (token) => {
   return response.data
 }
 
-//* DELETE USER ARTICLE
+//* EDIT ARTICLE
+// const editArticle = async (articleData, token) => {
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   }
+//   const response = await axios.put(API_URL + 'edit', articleData, config)
+//   return response.data
+// }
+
+//* DELETE ARTICLE
 const deleteArticle = async (articleId, token) => {
   const config = {
     headers: {

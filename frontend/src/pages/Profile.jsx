@@ -89,7 +89,7 @@ function Profile() {
             name='email'
             value={email}
             placeholder='Enter your email'
-            readonly
+            readOnly
           />
         </div>
         <div className="form-group">
