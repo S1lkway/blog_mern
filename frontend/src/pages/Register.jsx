@@ -20,7 +20,7 @@ function Register() {
   //dipatch includes actions from redux
   const dispatch = useDispatch()
 
-  //data from redux store
+  ///Data from redux store
   const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
   useEffect(() => {
@@ -54,7 +54,7 @@ function Register() {
         password,
       }
 
-      //We send data from form to authSlice to register function and there to server by authService
+      ///We send data from form to authSlice to register function and there to server by authService
       dispatch(register(userData))
     }
   }

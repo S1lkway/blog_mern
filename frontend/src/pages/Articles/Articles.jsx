@@ -3,11 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { FaPlus } from 'react-icons/fa6'
 import { FaAlignJustify } from "react-icons/fa";
-
 import ArticleItem from '../../components/ArticleItem'
 import Spinner from '../../components/Spinner'
-
-import { getArticles, reset } from '../../features/articles/articleSlice'
+import { getArticles, resetArticles } from '../../features/articles/articleSlice'
 
 
 function Articles() {
@@ -19,9 +17,6 @@ function Articles() {
   const { articles, isLoading, isError, message } = useSelector(
     (state) => state.articles
   )
-  // const { articles, isError, message } = useSelector(
-  //   (state) => state.articles
-  // )
 
   //* GET ARTICLES DATA AND RESET IN REDUX AFTER SUBMIT
   useEffect(() => {
@@ -34,7 +29,7 @@ function Articles() {
     /// Get articles data
     dispatch(getArticles())
     return () => {
-      dispatch(reset())
+      dispatch(resetArticles())
     }
   }, [user, navigate, isError, message, dispatch])
 

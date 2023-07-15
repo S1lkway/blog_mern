@@ -87,7 +87,7 @@ export const articleSlice = createSlice({
   name: 'article',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    resetArticles: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -138,5 +138,5 @@ export const articleSlice = createSlice({
   },
 })
 
-export const { reset } = articleSlice.actions
+export const { resetArticles } = articleSlice.actions
 export default articleSlice.reducer

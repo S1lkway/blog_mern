@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { login, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
@@ -15,7 +15,9 @@ function Login() {
   const { email, password } = formData
 
   const navigate = useNavigate()
+  const location = useLocation();
   const dispatch = useDispatch()
+
 
   const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
 
@@ -28,8 +30,16 @@ function Login() {
       navigate('/')
     }
 
+    /// Message after redirect if user is not authorized
+    const prevUrl = location.state?.prevUrl
+    if (prevUrl) {
+      toast.error('User is not authorized')
+      const { prevUrl, ...state } = location.state;
+      navigate({ pathname: '/login', state });
+    }
+
     dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+  }, [user, isError, isSuccess, message, navigate, dispatch, location])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
