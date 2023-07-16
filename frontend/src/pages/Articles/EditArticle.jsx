@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios';
 import { RiEdit2Line } from "react-icons/ri";
 import { getArticles, resetArticles } from '../../features/articles/articleSlice'
 
 function EditArticle() {
+  const params = useParams();
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  ///Get articleID from the path
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const articleId = searchParams.get('id');
+
+  //*CONSTANTS FOR DATA
+  ///Get articleID from path params
+  const articleId = params.id;
   console.log(articleId)
 
   const [formData, setFormData] = useState({

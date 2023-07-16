@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 function ArticleItem({ article }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const dispatch = useDispatch()
-  // const editLink = '/articles/edit/' + article._id
+  const editLink = '/articles/' + article._id
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -43,10 +43,13 @@ function ArticleItem({ article }) {
       <h5 className='articleCreatedAt'>{new Date(article.createdAt).toLocaleString('en-US')}</h5>
       <div className='close'>
 
-        <Link to={{
-          pathname: '/articles/edit',
+        {/* <Link to={{
+          pathname: '/articles/edit/',
           search: `?id=${article._id}`,
         }} className='articleButton' title="Edit article">
+          <RiEdit2Line />
+        </Link> */}
+        <Link to={editLink} className='articleButton' title="Edit article">
           <RiEdit2Line />
         </Link>
         <button onClick={openModal} className='articleButton' title="Delete article">
