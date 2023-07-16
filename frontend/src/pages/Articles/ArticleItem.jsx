@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 function ArticleItem({ article }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const dispatch = useDispatch()
-  const editLink = '/articles/' + article._id
+  // const editLink = '/articles/edit/' + article._id
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -24,7 +24,7 @@ function ArticleItem({ article }) {
   //   toast.info(`Article '${article.name}' deleted`)
   // }
 
-  /// Use dispatch if user clicked 'yes' in modal
+  /// use dispatch if user clicked 'yes' in modal
   const onDeleteArticle = () => {
     dispatch(deleteArticle(article._id));
     toast.info(`Article '${article.name}' deleted`);
@@ -43,7 +43,10 @@ function ArticleItem({ article }) {
       <h5 className='articleCreatedAt'>{new Date(article.createdAt).toLocaleString('en-US')}</h5>
       <div className='close'>
 
-        <Link to={editLink} className='articleButton' title="Edit article">
+        <Link to={{
+          pathname: '/articles/edit',
+          search: `?id=${article._id}`,
+        }} className='articleButton' title="Edit article">
           <RiEdit2Line />
         </Link>
         <button onClick={openModal} className='articleButton' title="Delete article">

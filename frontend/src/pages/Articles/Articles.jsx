@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { FaPlus } from 'react-icons/fa6'
 import { FaAlignJustify } from "react-icons/fa";
-import ArticleItem from '../../components/ArticleItem'
+import ArticleItem from './ArticleItem'
 import Spinner from '../../components/Spinner'
 import { getArticles, resetArticles } from '../../features/articles/articleSlice'
 
