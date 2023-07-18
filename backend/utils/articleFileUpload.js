@@ -7,7 +7,7 @@ const path = require('path');
 const storage = multer.diskStorage({
   ///Destination of uploading files
   destination: function (req, file, cb) {
-    cb(null, './uploads')
+    cb(null, 'backend/uploads/articleUploads')
   },
   ///Make filename with unique id, date of uploading and extension
   filename: function (req, file, cb) {

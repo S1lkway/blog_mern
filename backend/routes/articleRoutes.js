@@ -10,7 +10,7 @@ const {
 
 const { protect } = require('../middleware/authMiddleware')
 
-router.route('/').get(protect, getArticles).post(protect, upload.single('image'), createArticle)
+router.route('/').get(protect, getArticles).post(protect, upload.array('images', 5), createArticle)
 router.route('/:id').delete(protect, deleteArticle).put(protect, editArticle)
 // router.get('/', protect, getArticles)
 // router.post('/', protect, createArticle)

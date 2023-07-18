@@ -1,5 +1,24 @@
 const mongoose = require('mongoose')
 
+const imageSchema = mongoose.Schema({
+  filename: {
+    type: String,
+    required: true,
+  },
+  originalname: {
+    type: String,
+    required: true,
+  },
+  mimetype: {
+    type: String,
+    required: true,
+  },
+  size: {
+    type: Number,
+    required: true,
+  },
+});
+
 const articleSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -14,10 +33,9 @@ const articleSchema = mongoose.Schema({
     type: String,
     required: [true, 'Please add a text value']
   },
-  image: [{
-    type: String,
-    required: false,
-  }],
+  images: {
+    type: [imageSchema],
+  },
   likes: {
     type: Number,
     default: 0

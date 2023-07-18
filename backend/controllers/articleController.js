@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler')
-
+const path = require('path');
 const Article = require('../models/articleModel')
 const User = require('../models/userModel')
 
@@ -11,7 +11,16 @@ const createArticle = asyncHandler(async (req, res) => {
 
   /// Get user id from token after login
   const userId = req.user.id;
-  const fileName = req.file ? req.file.filename : []
+  /// Make images for article creating
+  const images = []
+  if (req.files) {
+    images = req.files.map((file) => ({
+      filename: file.filename,
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+      size: file.size,
+    }));
+  }
 
   /// Create article
   if (userId) {
@@ -19,7 +28,7 @@ const createArticle = asyncHandler(async (req, res) => {
       user: userId,
       name: req.body.name,
       text: req.body.text,
-      image: fileName
+      images: images
     })
     res.status(200).json(article)
   } else {
