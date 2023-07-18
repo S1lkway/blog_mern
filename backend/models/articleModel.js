@@ -14,6 +14,10 @@ const articleSchema = mongoose.Schema({
     type: String,
     required: [true, 'Please add a text value']
   },
+  image: [{
+    type: String,
+    required: false,
+  }],
   likes: {
     type: Number,
     default: 0

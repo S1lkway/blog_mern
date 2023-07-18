@@ -11,6 +11,7 @@ const createArticle = asyncHandler(async (req, res) => {
 
   /// Get user id from token after login
   const userId = req.user.id;
+  const fileName = req.file ? req.file.filename : []
 
   /// Create article
   if (userId) {
@@ -18,6 +19,7 @@ const createArticle = asyncHandler(async (req, res) => {
       user: userId,
       name: req.body.name,
       text: req.body.text,
+      image: fileName
     })
     res.status(200).json(article)
   } else {

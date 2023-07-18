@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const upload = require('../utils/articleFileUpload'); // Импортируйте экземпляр Multer из файла upload.js
 const {
   getArticles,
   createArticle,
@@ -9,9 +10,8 @@ const {
 
 const { protect } = require('../middleware/authMiddleware')
 
-router.route('/').get(protect, getArticles).post(protect, createArticle)
+router.route('/').get(protect, getArticles).post(protect, upload.single('image'), createArticle)
 router.route('/:id').delete(protect, deleteArticle).put(protect, editArticle)
-
 // router.get('/', protect, getArticles)
 // router.post('/', protect, createArticle)
 // router.put('/:id', protect, editArticle)
