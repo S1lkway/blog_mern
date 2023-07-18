@@ -13,7 +13,7 @@ const createArticle = async (articleData, token) => {
   return response.data
 }
 
-//* GET USER ARTICLES
+//* GET ALL ARTICLES
 const getArticles = async (token) => {
   const config = {
     headers: {
@@ -24,16 +24,17 @@ const getArticles = async (token) => {
   return response.data
 }
 
+
 //* EDIT ARTICLE
-// const editArticle = async (articleData, token) => {
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   }
-//   const response = await axios.put(API_URL + 'edit', articleData, config)
-//   return response.data
-// }
+const editArticle = async (articleData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.put(API_URL + articleData.id, articleData, config)
+  return response.data
+}
 
 //* DELETE ARTICLE
 const deleteArticle = async (articleId, token) => {
@@ -50,6 +51,7 @@ const deleteArticle = async (articleId, token) => {
 const articleService = {
   createArticle,
   getArticles,
+  editArticle,
   deleteArticle
 }
 

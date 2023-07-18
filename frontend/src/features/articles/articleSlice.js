@@ -28,8 +28,7 @@ export const createArticle = createAsyncThunk(
   }
 )
 
-//* GET USER ARTICLES
-// Get user articles
+//* GET ALL ARTICLES
 export const getArticles = createAsyncThunk(
   'articles/userArticles',
   async (_, thunkAPI) => {
@@ -48,21 +47,21 @@ export const getArticles = createAsyncThunk(
   }
 )
 
-//* EDIT USER ARTICLE
-// export const editArticle = createAsyncThunk(
-//   'articles/edit',
-//   async (id, thunkAPI) => {
-//     try {
-//       const token = thunkAPI.getState().auth.user.token
-//       return await articleService.editArticle(user, token)
-//     } catch (error) {
-//       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
+//* EDIT ARTICLE
+export const editArticle = createAsyncThunk(
+  'articles/edit',
+  async (articleData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await articleService.editArticle(articleData, token)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 
-//* DELETE USER ARTICLE
+//* DELETE ARTICLE
 export const deleteArticle = createAsyncThunk(
   'articles/delete',
   async (id, thunkAPI) => {
@@ -115,6 +114,22 @@ export const articleSlice = createSlice({
         state.articles = action.payload
       })
       .addCase(getArticles.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      /// editArticle
+      .addCase(editArticle.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(editArticle.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.articles = state.articles.map((article) =>
+          article._id === action.payload._id ? action.payload : article
+        );
+      })
+      .addCase(editArticle.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

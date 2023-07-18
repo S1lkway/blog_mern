@@ -35,6 +35,31 @@ const getArticles = asyncHandler(async (req, res) => {
   res.status(200).json(articles)
 })
 
+//* desc Get one article
+//* route GET /api/articles/:id
+//* access Private
+const getArticle = asyncHandler(async (req, res) => {
+  const article = await Article.findById(req.params.id)
+  /// Check for user
+  if (!req.user) {
+    res.status(401)
+    throw new Error('User not found')
+  }
+
+  /// Make sure the logged in user matches the article user
+  if (article.user.toString() !== req.user.id) {
+    res.status(401)
+    throw new Error('The article belongs to another user')
+  }
+
+  if (!article) {
+    res.status(400)
+    throw new Error('Article is not found')
+  }
+
+  res.status(200).json(article)
+})
+
 //* desc Edit article
 //* route PUT /api/articles:id
 //* access Private
@@ -59,11 +84,11 @@ const editArticle = async (req, res) => {
       throw new Error('Article is not found')
     }
 
-    const updatedarticle = await Article.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedArticle = await Article.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     })
 
-    res.status(200).json(updatedarticle)
+    res.status(200).json(updatedArticle)
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -101,6 +126,7 @@ const deleteArticle = asyncHandler(async (req, res) => {
 
 module.exports = {
   getArticles,
+  getArticle,
   createArticle,
   editArticle,
   deleteArticle,
