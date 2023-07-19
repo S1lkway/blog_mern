@@ -8,19 +8,10 @@ const User = require('../models/userModel')
 //* route POST /api/articles
 //* access Private
 const createArticle = asyncHandler(async (req, res) => {
-
+  ///We get files data from FormData
+  const files = req.files
   /// Get user id from token after login
   const userId = req.user.id;
-  /// Make images for article creating
-  const images = []
-  if (req.files) {
-    images = req.files.map((file) => ({
-      filename: file.filename,
-      originalname: file.originalname,
-      mimetype: file.mimetype,
-      size: file.size,
-    }));
-  }
 
   /// Create article
   if (userId) {
@@ -28,7 +19,7 @@ const createArticle = asyncHandler(async (req, res) => {
       user: userId,
       name: req.body.name,
       text: req.body.text,
-      images: images
+      images: files
     })
     res.status(200).json(article)
   } else {
