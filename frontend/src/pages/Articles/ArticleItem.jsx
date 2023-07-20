@@ -18,6 +18,8 @@ function ArticleItem({ article }) {
     text: article.text,
   })
   const { id, name, text } = formData
+  ///Path to show picture from backend
+  const imagPath = '/uploads/articleUploads/' + article.images[0].filename
 
   //*EDIT ARTICLE IN MODAL
   const openEditModal = () => {
@@ -80,6 +82,7 @@ function ArticleItem({ article }) {
       <div className='articleName'>
         <h3>{article.name}</h3>
         <p>{article.text}</p>
+        <img src={imagPath} alt="Пример" style={{ width: '100%' }} />
       </div>
 
       <h5 className='articleCreatedAt'>{new Date(article.createdAt).toLocaleString('en-US')}</h5>

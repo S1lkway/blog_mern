@@ -1,16 +1,24 @@
 const express = require('express')
+const path = require('path');
 const colors = require('colors')
 const dotenv = require('dotenv').config()
 const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
 const port = process.env.PORT || 5000
 
-connectDB()
 
+connectDB()
 const app = express()
 
 
-//TODO Middlewares
+//* PATH TO GET IMAGES FROM BACKEND TO FRONTEND
+/* We make absolute path to folder with files */
+const articleUploadsPath = path.join(__dirname, 'uploads', 'articleUploads');
+/* Set path on frontend that will use backend path in articleUploadsPath */
+app.use('/uploads/articleUploads', express.static(articleUploadsPath));
+
+
+//* MIDDLEWARES
 /* Used to parse incoming requests with JSON payloads */
 app.use(express.json())
 /* Used to parse incoming requests with URL-encoded payloads 
@@ -18,7 +26,7 @@ The extended option determines how the URL-encoded data is parsed. When set to f
 app.use(express.urlencoded({ extended: false }))
 
 
-//TODO  ROUTES  
+//*  ROUTES  
 // routes for registration, edit user and authorization
 app.use('/api/users', require('./routes/userRoutes'))
 // routes for creating, deleting and edit articles
