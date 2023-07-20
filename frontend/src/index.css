@@ -47,7 +47,7 @@ h3 {
 /** ------------------------------ */
 
 /** REACTMODAL WINDOWS */
-/* delete article */
+/*/// Delete article */
 .deleteArticleModal {
   position: fixed;
   min-width: 15%;
@@ -72,10 +72,12 @@ h3 {
   background-color: rgba(209, 205, 205, 0.75);
 }
 
-/* Edit article */
+/*----------------*/
+
+/*/// Edit article Modal */
 .editArticleModal {
   position: fixed;
-  width: 60%;
+  width: 100vh;
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -96,6 +98,38 @@ h3 {
   background-color: rgba(209, 205, 205, 0.75);
 }
 
+/*----------------*/
+
+/*/// Image Modal */
+.articleImageModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.articleImageModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ;
+}
+
+.modal-image {
+  max-width: 150vh;
+  max-height: 90vh;
+}
+
+/*----------------*/
 .modalButtons {
   display: flex;
   align-items: center;
@@ -291,6 +325,13 @@ h1 {
 
 /** ------------------------------ */
 
+/** CAROUSEL */
+.carousel-image-container {
+  max-width: 500px;
+}
+
+/** ------------------------------ */
+
 /** SPINNER */
 .loadingSpinnerContainer {
   position: fixed;
@@ -326,6 +367,45 @@ h1 {
   }
 }
 
+@media (max-width: 1200px) {
+
+  /*/// Edit article Modal */
+  .editArticleModal {
+    width: 80%;
+  }
+
+  /*----------------*/
+
+  /*/// Image Modal */
+  .modal-image {
+    max-width: 90vh;
+    max-height: 90vh;
+  }
+
+  /*----------------*/
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 90%;
+  }
+
+  .heading h1 {
+    font-size: 2rem;
+  }
+
+  .heading p {
+    font-size: 1.5rem;
+  }
+
+  /*/// Edit article Modal */
+  .editArticleModal {
+    width: 95%;
+  }
+
+  /*----------------*/
+}
+
 @media (max-width: 600px) {
   .form {
     width: 90%;
@@ -342,22 +422,12 @@ h1 {
   .editArticleModal {
     width: 95%;
   }
-}
 
-@media (max-width: 768px) {
-  .form {
-    width: 90%;
+  /*/// Image Modal */
+  .modal-image {
+    max-width: 50vh;
+    max-height: 90vh;
   }
 
-  .heading h1 {
-    font-size: 2rem;
-  }
-
-  .heading p {
-    font-size: 1.5rem;
-  }
-
-  .editArticleModal {
-    width: 95%;
-  }
+  /*----------------*/
 }

@@ -5,6 +5,7 @@ import { deleteArticle } from '../../features/articles/articleSlice'
 import { RiCloseFill, RiEdit2Line } from "react-icons/ri";
 import { toast } from 'react-toastify'
 import { editArticle } from '../../features/articles/articleSlice'
+import Carousel from '../../components/Carousel';
 
 function ArticleItem({ article }) {
   //* CONSTANTS FOR DATA
@@ -18,8 +19,9 @@ function ArticleItem({ article }) {
     text: article.text,
   })
   const { id, name, text } = formData
-  ///Path to show picture from backend
-  const imagPath = '/uploads/articleUploads/' + article.images[0].filename
+  /// basePath to show picture from backend
+  const basePath = '/uploads/articleUploads/'
+  // const imagPath = '/uploads/articleUploads/' + article.images[0].filename
 
   //*EDIT ARTICLE IN MODAL
   const openEditModal = () => {
@@ -81,8 +83,9 @@ function ArticleItem({ article }) {
     <div className='article'>
       <div className='articleName'>
         <h3>{article.name}</h3>
+        <Carousel images={article.images} basePath={basePath} />
         <p>{article.text}</p>
-        <img src={imagPath} alt="Пример" style={{ width: '100%' }} />
+        {/* <img src={imagPath} alt="Пример" style={{ width: '100%' }} /> */}
       </div>
 
       <h5 className='articleCreatedAt'>{new Date(article.createdAt).toLocaleString('en-US')}</h5>
