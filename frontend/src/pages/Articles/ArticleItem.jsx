@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import ReactModal from 'react-modal';
-import { deleteArticle } from '../../features/articles/articleSlice'
+import Carousel from '../../components/Carousel';
 import { RiCloseFill, RiEdit2Line } from "react-icons/ri";
 import { toast } from 'react-toastify'
+import EditImage from './EditImage';
 import { editArticle } from '../../features/articles/articleSlice'
-import Carousel from '../../components/Carousel';
+import { deleteArticle } from '../../features/articles/articleSlice'
+
 
 function ArticleItem({ article }) {
+
   //* CONSTANTS FOR DATA
   const dispatch = useDispatch()
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -17,8 +20,11 @@ function ArticleItem({ article }) {
     id: article._id,
     name: article.name,
     text: article.text,
+    images: article.images
   })
-  const { id, name, text } = formData
+  const { id, name, text, images } = formData
+  // console.log(article.images)
+  // console.log(formData.images)
   /// basePath to show picture from backend
   const basePath = '/uploads/articleUploads/'
   // const imagPath = '/uploads/articleUploads/' + article.images[0].filename
@@ -34,6 +40,7 @@ function ArticleItem({ article }) {
       id: article._id,
       name: article.name,
       text: article.text,
+      images: article.images,
     }))
   };
   ///EDIT formData BY CHANGING DATA IN FORM FIELDS
@@ -86,6 +93,7 @@ function ArticleItem({ article }) {
         {article.images.length > 0 ? (
           <Carousel images={article.images} basePath={basePath} />
         ) : (<></>)}
+
         <p>{article.text}</p>
       </div>
 
@@ -108,6 +116,15 @@ function ArticleItem({ article }) {
               <RiEdit2Line /> Edit article
             </h1>
             <p>Save to change the article</p>
+          </section>
+
+          <section>
+            <div className='editImages'>
+              {images.length > 0 ?
+                (images.map((image) => (<EditImage key={image._id} image={image} basePath={basePath} />))) :
+                (<></>)
+              }
+            </div>
           </section>
 
           <section className=''>

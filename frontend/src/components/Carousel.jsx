@@ -41,7 +41,6 @@ function ImageCarousel({ images, basePath }) {
           {images.map((image, index) => (
             <div key={image._id} className='carousel-image-container' onDoubleClick={() => OpenImageModal(index)}>
               <img
-                key={image._id}
                 src={basePath + image.filename}
                 alt={`File "${image.originalname}" wasn't found`}
                 className='carousel-image'
