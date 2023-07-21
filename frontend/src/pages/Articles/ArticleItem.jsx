@@ -83,7 +83,9 @@ function ArticleItem({ article }) {
     <div className='article'>
       <div className='articleName'>
         <h2>{article.name}</h2>
-        <Carousel images={article.images} basePath={basePath} />
+        {article.images.length > 0 ? (
+          <Carousel images={article.images} basePath={basePath} />
+        ) : (<></>)}
         <p>{article.text}</p>
       </div>
 
