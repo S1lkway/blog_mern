@@ -82,10 +82,9 @@ function ArticleItem({ article }) {
   return (
     <div className='article'>
       <div className='articleName'>
-        <h3>{article.name}</h3>
+        <h2>{article.name}</h2>
         <Carousel images={article.images} basePath={basePath} />
         <p>{article.text}</p>
-        {/* <img src={imagPath} alt="Пример" style={{ width: '100%' }} /> */}
       </div>
 
       <h5 className='articleCreatedAt'>{new Date(article.createdAt).toLocaleString('en-US')}</h5>

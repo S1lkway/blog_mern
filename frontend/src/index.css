@@ -19,6 +19,7 @@ a {
 
 p {
   line-height: 1.7;
+  white-space: pre-line;
 }
 
 ul {
@@ -326,9 +327,17 @@ h1 {
 /** ------------------------------ */
 
 /** CAROUSEL */
-.carousel-image-container {
-  max-width: 500px;
+.image-carousel {
+  width: 45vh;
 }
+
+/* .carousel-image-container {
+  max-width: 100%;
+} */
+
+/* .carousel-image {
+  max-width: 100%;
+} */
 
 /** ------------------------------ */
 
