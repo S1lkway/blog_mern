@@ -30,6 +30,11 @@ function ImageCarousel({ images, basePath }) {
       <div className='image-carousel'>
         <Carousel
           showThumbs={true}
+          showArrows={false}
+          autoPlay={true}
+          interval={6000}
+          infiniteLoop={true}
+          showIndicators={false}
           selectedItem={selectedImageIndex}
           onChange={(index) => setSelectedImageIndex(index)}
         >
@@ -37,7 +42,7 @@ function ImageCarousel({ images, basePath }) {
             <div key={image._id} className='carousel-image-container' onDoubleClick={() => OpenImageModal(index)}>
               <img
                 src={basePath + image.filename}
-                alt={image.originalname}
+                alt={`File "${image.originalname}" wasn't found`}
                 className='carousel-image'
                 onClick={() => handleImageClick(index)}
               />

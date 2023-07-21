@@ -2,7 +2,6 @@ const asyncHandler = require('express-async-handler')
 const path = require('path');
 const fs = require('fs');
 const Article = require('../models/articleModel')
-// const User = require('../models/userModel')
 
 
 //* desc Create article
@@ -126,8 +125,10 @@ const deleteArticle = asyncHandler(async (req, res) => {
 
   /// Delete files attached to article
   article.images.forEach((image) => {
-    const imagePath = path.join(__dirname, '../uploads/articleUploads', image.filename);
-    fs.unlinkSync(imagePath); // Синхронно удаляем файл
+    const imagePath = path.join(__dirname, '../uploads/articleUploads', image.filename)
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath)
+    }
   });
 
   ///Delete article data from MongoDB
