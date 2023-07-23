@@ -30,7 +30,7 @@ function ImageCarousel({ images, basePath }) {
       <div className='image-carousel'>
         <Carousel
           showThumbs={true}
-          showArrows={false}
+          showArrows={true}
           autoPlay={true}
           interval={6000}
           infiniteLoop={true}

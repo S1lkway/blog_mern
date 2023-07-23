@@ -1,14 +1,14 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { FaPlus } from 'react-icons/fa6'
+import { RiCloseFill } from "react-icons/ri";
 import { createArticle } from '../../features/articles/articleSlice'
 import { toast } from 'react-toastify'
 
 function CreateArticle() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const fileInputRef = useRef();
 
   //* CONSTANTS FOR DATA
   const [filesData, setFilesData] = useState([]);
@@ -24,8 +24,13 @@ function CreateArticle() {
     if (e.target.name === 'files') {
       const selectedFiles = Array.from(e.target.files).filter(
         (file) => file.type.startsWith('image/')
-      );
-      setFilesData(selectedFiles);
+      )
+      if (selectedFiles.length > 5) {
+        toast.error('Maximum 5 files allowed')
+        setFilesData([])
+      } else {
+        setFilesData(selectedFiles);
+      }
     } else {
       setFormData((prevState) => ({
         ...prevState,
@@ -33,6 +38,16 @@ function CreateArticle() {
       }));
     }
   }
+
+  //* DELETE PICKED IMAGE
+  const deleteImage = (index) => {
+    ///Make example of filesData and delete file by index
+    const newFilesData = [...filesData];
+    newFilesData.splice(index, 1);
+    ///Set new filesData
+    setFilesData(newFilesData);
+
+  };
 
   //* ADD ARTICLE BY SUBMIT
   const onSubmit = e => {
@@ -70,6 +85,31 @@ function CreateArticle() {
         </h1>
         <p>Add name and text of article</p>
       </section>
+      {/* Images to display and delete */}
+      <section className='form'>
+        <div className='editImages'>
+          {filesData.length > 0 ?
+            (filesData.map((file, index) => (
+              <div className="editImageDiv">
+                <img
+                  key={file._id}
+                  src={URL.createObjectURL(file)}
+                  alt={`File "${file.originalname}" wasn't found`}
+                  className='editImage'
+                />
+
+                <button onClick={() => deleteImage(index)} className='articleButton editButtonDeleteImage' title="Delete file">
+                  <RiCloseFill />
+                </button>
+
+              </div>
+            ))) :
+            (<></>)
+          }
+        </div>
+      </section>
+
+      {/* FROM to create an article */}
       <section className='form'>
         <form onSubmit={onSubmit}>
 
@@ -91,9 +131,9 @@ function CreateArticle() {
               id="files"
               name="files"
               multiple
-              ref={fileInputRef}
               onChange={onChange}
               accept='image/*'
+              key={filesData.length}
             />
           </div>
 
