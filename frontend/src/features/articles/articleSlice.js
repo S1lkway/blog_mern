@@ -47,6 +47,25 @@ export const getArticles = createAsyncThunk(
   }
 )
 
+//* GET ONE ARTICLE
+export const getArticle = createAsyncThunk(
+  'articles/edit/:id',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await articleService.getArticle(id, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 //* EDIT ARTICLE
 export const editArticle = createAsyncThunk(
   'articles/edit',
@@ -114,6 +133,20 @@ export const articleSlice = createSlice({
         state.articles = action.payload
       })
       .addCase(getArticles.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      /// getArticle
+      .addCase(getArticle.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getArticle.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.articles = action.payload
+      })
+      .addCase(getArticle.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -4,6 +4,7 @@ const upload = require('../utils/articleFileUpload'); // Импортируйт�
 const {
   getArticles,
   createArticle,
+  getArticle,
   editArticle,
   deleteArticle,
 } = require('../controllers/articleController')
@@ -11,7 +12,7 @@ const {
 const { protect } = require('../middleware/authMiddleware')
 
 router.route('/').get(protect, getArticles).post(protect, upload.array('images', 5), createArticle)
-router.route('/:id').delete(protect, deleteArticle).put(protect, editArticle)
+router.route('/:id').get(protect, getArticle).delete(protect, deleteArticle).put(protect, editArticle)
 // router.get('/', protect, getArticles)
 // router.post('/', protect, createArticle)
 // router.put('/:id', protect, editArticle)

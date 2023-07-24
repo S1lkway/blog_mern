@@ -24,6 +24,17 @@ const getArticles = async (token) => {
   return response.data
 }
 
+//* GET ONE ARTICLE
+const getArticle = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.get(API_URL + id, config)
+  return response.data
+}
+
 
 //* EDIT ARTICLE
 const editArticle = async (articleData, token) => {
@@ -51,6 +62,7 @@ const deleteArticle = async (articleId, token) => {
 const articleService = {
   createArticle,
   getArticles,
+  getArticle,
   editArticle,
   deleteArticle
 }
