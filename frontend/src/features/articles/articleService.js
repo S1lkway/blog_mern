@@ -47,6 +47,22 @@ const editArticle = async (articleData, token) => {
   return response.data
 }
 
+//* DELETE ARTICLE IMAGE
+const deleteArticleImage = async (imageData, token) => {
+  ///Constants
+  const articleId = imageData.articleId
+  const imageId = imageData.imageId
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  ///Get data from backend
+  const response = await axios.delete(API_URL + articleId + '/deleteimage/' + imageId, config)
+
+  return response.data
+}
+
 //* DELETE ARTICLE
 const deleteArticle = async (articleId, token) => {
   const config = {
@@ -64,6 +80,7 @@ const articleService = {
   getArticles,
   getArticle,
   editArticle,
+  deleteArticleImage,
   deleteArticle
 }
 

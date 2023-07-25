@@ -80,6 +80,20 @@ export const editArticle = createAsyncThunk(
   }
 )
 
+//* DELETE IMAGE
+export const deleteImage = createAsyncThunk(
+  'articles/edit/:id/deleteimage/:imageId',
+  async (imageData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await articleService.deleteArticleImage(imageData, token)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 //* DELETE ARTICLE
 export const deleteArticle = createAsyncThunk(
   'articles/delete',
@@ -98,7 +112,6 @@ export const deleteArticle = createAsyncThunk(
     }
   }
 )
-
 
 //* ARTICLESLICE
 export const articleSlice = createSlice({
@@ -163,6 +176,20 @@ export const articleSlice = createSlice({
         );
       })
       .addCase(editArticle.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      /// deleteArticleImage
+      .addCase(deleteImage.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteImage.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.articles = action.payload
+      })
+      .addCase(deleteImage.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

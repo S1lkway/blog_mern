@@ -1,28 +1,29 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { RiCloseFill, RiEdit2Line } from "react-icons/ri";
 import { toast } from 'react-toastify'
-// import { getArticle, resetArticles } from '../../features/articles/articleSlice'
+import { editArticle, deleteImage, getArticle } from '../../features/articles/articleSlice'
 import Spinner from '../../components/Spinner'
 
 function EditArticle() {
+  //* CONSTANTS FOR DATA
+  const { id } = useParams()
   const basePath = '/uploads/articleUploads/'
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  ///Get articleData
+  useEffect(() => {
+    dispatch(getArticle(id))
+  }, [id, dispatch])
   const { user } = useSelector((state) => state.auth)
-
   const { articles, isLoading, isError, message } = useSelector(
     (state) => state.articles
   )
+  ///Data for FORM and FILES
   const [oldFilesData, setOldFilesData] = useState([]);
-  // const [newFilesData, setNewFilesData] = useState([]);
-  const [formData, setFormData] = useState({
-    id: '',
-    name: '',
-    text: '',
-  });
-
+  const [formData, setFormData] = useState({});
+  ///Set DATA on page
   useEffect(() => {
     if (isError) {
       console.log(message)
@@ -56,20 +57,17 @@ function EditArticle() {
       // }
     }
     // else {
-    //   setFormData((prevState) => ({
-    //     ...prevState,
-    //     [e.target.name]: e.target.value,
-    //   }));
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
     // }
   }
 
   //* DELETE UPLOAD IMAGE
-  const deleteImage = (index) => {
-    ///Make example of oldFilesData and delete file by index
-    const newFilesData = [...oldFilesData];
-    newFilesData.splice(index, 1);
-    ///Set new oldFilesData
-    setOldFilesData(newFilesData);
+  const deleteOldImage = (imageId) => {
+    const imageData = { articleId: id, imageId: imageId }
+    dispatch(deleteImage(imageData))
   };
 
   //* EDIT ARTICLE DATA BY SUBMIT
@@ -79,26 +77,21 @@ function EditArticle() {
     if (!name || !text) {
       toast.error('Add all fields')
     } else {
-      // const articleData = {
-      //   id,
-      //   name,
-      //   text,
-      // }
-
+      const articleData = {
+        id,
+        name,
+        text,
+      }
       /// We send data from form to articleSlice to createArticle function and there to server by articleService
-      // dispatch(editArticle(articleData))
+      dispatch(editArticle(articleData))
       toast.success('Article edited')
     }
   }
-
 
   //* LOADING SPINNER
   if (isLoading) {
     return <Spinner />
   }
-
-  // console.log(oldFilesData)
-  // console.log(formData)
 
   return (
     <div>
@@ -122,7 +115,7 @@ function EditArticle() {
                   className='editImage'
                 />
 
-                <button onClick={() => deleteImage(index)} className='articleButton editButtonDeleteImage' title="Delete file">
+                <button onClick={() => deleteOldImage(file._id)} className='articleButton editButtonDeleteImage' title="Delete file">
                   <RiCloseFill />
                 </button>
 
@@ -132,7 +125,6 @@ function EditArticle() {
           }
         </div>
       </section>
-
 
       <section className='form'>
         <form onSubmit={onSubmit}>

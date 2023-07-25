@@ -5,7 +5,7 @@ import ReactModal from 'react-modal';
 import Carousel from '../../components/Carousel';
 import { RiCloseFill, RiEdit2Line } from "react-icons/ri";
 import { toast } from 'react-toastify'
-import { deleteArticle, resetArticles, getArticle } from '../../features/articles/articleSlice'
+import { deleteArticle } from '../../features/articles/articleSlice'
 
 
 function ArticleItem({ article }) {
@@ -17,47 +17,6 @@ function ArticleItem({ article }) {
 
   /// basePath to show picture from backend
   const basePath = '/uploads/articleUploads/'
-
-  //*EDIT ARTICLE IN MODAL
-  // const openEditModal = () => {
-  //   setModalEditOpen(true);
-  // };
-
-  // const closeEditModal = () => {
-  //   setModalEditOpen(false);
-  //   setFormData(() => ({
-  //     id: article._id,
-  //     name: article.name,
-  //     text: article.text,
-  //     images: article.images,
-  //   }))
-  // };
-  ///EDIT formData BY CHANGING DATA IN FORM FIELDS
-  // const onChange = (e) => {
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [e.target.name]: e.target.value,
-  //   }))
-  // }
-  ///EDIT ARTICLE DATA BY SUBMIT
-  // const onSubmit = (e) => {
-  //   e.preventDefault()
-
-  //   if (!name || !text) {
-  //     toast.error('Add all fields')
-  //   } else {
-  //     const articleData = {
-  //       id,
-  //       name,
-  //       text,
-  //     }
-
-  //     /// We send data from form to articleSlice to createArticle function and there to server by articleService
-  //     dispatch(editArticle(articleData))
-  //     toast.success('Article edited')
-  //     closeEditModal()
-  //   }
-  // }
 
   //*DELETE ARTICLE IN MODAL
   const openDeleteModal = () => {
@@ -76,8 +35,6 @@ function ArticleItem({ article }) {
   //*GO TO EDIT PAGE
   const goToEditPage = () => {
     navigate(`/articles/edit/${article._id}`)
-    dispatch(resetArticles())
-    dispatch(getArticle(article._id))
   }
 
   // ------------------------------------------------------------------ //

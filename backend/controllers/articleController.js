@@ -2,9 +2,7 @@ const asyncHandler = require('express-async-handler')
 const path = require('path');
 const fs = require('fs');
 const Article = require('../models/articleModel')
-
 const uploadFolderPath = path.join(__dirname, '../uploads/articleUploads')
-
 
 
 //* desc Create article
@@ -15,7 +13,6 @@ const createArticle = asyncHandler(async (req, res) => {
   const files = req.files
   /// Get user id from token after login
   const userId = req.user.id;
-
   /// Create article
   if (userId) {
     const article = await Article.create({
@@ -45,18 +42,18 @@ const getArticles = asyncHandler(async (req, res) => {
 //* access Private
 const getArticle = asyncHandler(async (req, res) => {
   const article = await Article.findById(req.params.id)
+
   /// Check for user
   if (!req.user) {
     res.status(401)
     throw new Error('User not found')
   }
-
   /// Make sure the logged in user matches the article user
   if (article.user.toString() !== req.user.id) {
     res.status(401)
     throw new Error('The article belongs to another user')
   }
-
+  /// Check article
   if (!article) {
     res.status(400)
     throw new Error('Article is not found')
@@ -77,23 +74,21 @@ const editArticle = async (req, res) => {
       res.status(401)
       throw new Error('User not found')
     }
-
     /// Make sure the logged in user matches the article user
     if (article.user.toString() !== req.user.id) {
       res.status(401)
       throw new Error('The article belongs to another user')
     }
-
+    ///Check article
     if (!article) {
       res.status(400)
       throw new Error('Article is not found')
     }
-
+    ///Update article data
     const updatedArticle = await Article.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     })
-
-    res.status(200).json(updatedArticle)
+    res.status(200).json({ updatedArticle })
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -126,23 +121,22 @@ const deleteArticleImage = asyncHandler(async (req, res) => {
       res.status(401)
       throw new Error('User is not authorized')
     }
-
     /// Update article data in MongoDB
     const updatedArticle = await Article.findByIdAndUpdate(
       articleId,
       { $pull: { images: { _id: imageId } } },
       { new: true }
     );
-    if (!updatedArticle) {
-      res.status(400)
-      throw new Error('Article is not updated')
-    } else {
-      /// Delete file in upload folder
+    /// Delete file in upload folder
+    if (updatedArticle) {
       const imagePath = path.join(uploadFolderPath, image.filename)
       fs.unlinkSync(imagePath);
+    } else {
+      res.status(400)
+      throw new Error('Article is not updated')
     }
 
-    res.status(200).json({ updatedArticle })
+    res.status(200).json(updatedArticle)
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -155,25 +149,21 @@ const deleteArticle = asyncHandler(async (req, res) => {
 
   /// Get artcile data from MongoDB
   const article = await Article.findById(req.params.id)
-
   /// Check for article
   if (!article) {
     res.status(400)
     throw new Error('Article is not found')
   }
-
   /// Check for user
   if (!req.user) {
     res.status(401)
     throw new Error('User is not found')
   }
-
   /// Make sure the logged in user matches the article user
   if (article.user.toString() !== req.user.id) {
     res.status(401)
     throw new Error('User is not authorized')
   }
-
   /// Delete files attached to article
   article.images.forEach((image) => {
     const imagePath = path.join(__dirname, '../uploads/articleUploads', image.filename)
@@ -181,7 +171,6 @@ const deleteArticle = asyncHandler(async (req, res) => {
       fs.unlinkSync(imagePath)
     }
   });
-
   ///Delete article data from MongoDB
   await article.deleteOne()
 
