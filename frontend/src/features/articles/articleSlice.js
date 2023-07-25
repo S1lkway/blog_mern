@@ -49,7 +49,7 @@ export const getArticles = createAsyncThunk(
 
 //* GET ONE ARTICLE
 export const getArticle = createAsyncThunk(
-  'articles/edit/:id',
+  'articles/edit',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
@@ -68,7 +68,7 @@ export const getArticle = createAsyncThunk(
 
 //* EDIT ARTICLE
 export const editArticle = createAsyncThunk(
-  'articles/edit',
+  'articles/edit/:id',
   async (articleData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token

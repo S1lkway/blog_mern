@@ -90,7 +90,7 @@ function CreateArticle() {
         <div className='editImages'>
           {filesData.length > 0 ?
             (filesData.map((file, index) => (
-              <div key={file._id} className="editImageDiv">
+              <div key={index} className="editImageDiv">
                 <img
                   key={file._id}
                   src={URL.createObjectURL(file)}

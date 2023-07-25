@@ -3,6 +3,9 @@ const path = require('path');
 const fs = require('fs');
 const Article = require('../models/articleModel')
 
+const uploadFolderPath = path.join(__dirname, '../uploads/articleUploads')
+
+
 
 //* desc Create article
 //* route POST /api/articles
@@ -28,7 +31,7 @@ const createArticle = asyncHandler(async (req, res) => {
   }
 })
 
-//* desc Get articles
+//* desc Get Articles
 //* route GET /api/articles
 //* access Private
 const getArticles = asyncHandler(async (req, res) => {
@@ -37,7 +40,7 @@ const getArticles = asyncHandler(async (req, res) => {
   res.status(200).json(articles)
 })
 
-//* desc Get one article
+//* desc Get One Article
 //* route GET /api/articles/:id
 //* access Private
 const getArticle = asyncHandler(async (req, res) => {
@@ -62,7 +65,7 @@ const getArticle = asyncHandler(async (req, res) => {
   res.status(200).json(article)
 })
 
-//* desc Edit article
+//* desc Edit Article
 //* route PUT /api/articles:id
 //* access Private
 const editArticle = async (req, res) => {
@@ -96,6 +99,54 @@ const editArticle = async (req, res) => {
   }
 
 };
+
+//* desc Delete Article Image
+//* route DELETE /api/articles/:id/deleteimage
+//* access Private
+const deleteArticleImage = asyncHandler(async (req, res) => {
+  const imageId = req.params.imageId
+  const articleId = req.params.id
+  /// Get artcile data from MongoDB
+  const article = await Article.findById(articleId)
+  const image = article.images.find((img) => img._id.toString() === imageId);
+
+  try {
+    /// Check for user
+    if (!req.user) {
+      res.status(401)
+      throw new Error('User is not found')
+    }
+    /// Check for article
+    if (!article) {
+      res.status(400)
+      throw new Error('Article is not found')
+    }
+    /// Make sure the logged in user matches the article user
+    if (article.user.toString() !== req.user.id) {
+      res.status(401)
+      throw new Error('User is not authorized')
+    }
+
+    /// Update article data in MongoDB
+    const updatedArticle = await Article.findByIdAndUpdate(
+      articleId,
+      { $pull: { images: { _id: imageId } } },
+      { new: true }
+    );
+    if (!updatedArticle) {
+      res.status(400)
+      throw new Error('Article is not updated')
+    } else {
+      /// Delete file in upload folder
+      const imagePath = path.join(uploadFolderPath, image.filename)
+      fs.unlinkSync(imagePath);
+    }
+
+    res.status(200).json({ updatedArticle })
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+})
 
 //* desc Delete article
 //* route DELETE /api/articles:id
@@ -143,4 +194,5 @@ module.exports = {
   createArticle,
   editArticle,
   deleteArticle,
+  deleteArticleImage,
 }
