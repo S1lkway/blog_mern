@@ -31,6 +31,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/api/users', require('./routes/userRoutes'))
 // routes for creating, deleting and edit articles
 app.use('/api/articles', require('./routes/articleRoutes'))
+// routes for reading all articles, make comments and like them
+app.use('/api/newsfeed', require('./routes/newsFeedRoutes'))
 
 /* Provides a basic error handling mechanism in Express that sends a JSON response with an error message and, optionally, the stack trace */
 app.use(errorHandler)
