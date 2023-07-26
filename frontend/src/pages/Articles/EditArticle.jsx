@@ -1,6 +1,8 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import ReactModal from 'react-modal';
 import { RiCloseFill, RiEdit2Line } from "react-icons/ri";
 import { toast } from 'react-toastify'
 import { editArticle, deleteImage, getArticle } from '../../features/articles/articleSlice'
@@ -24,6 +26,9 @@ function EditArticle() {
   const [oldFilesData, setOldFilesData] = useState([]); /// Uploaded files
   const [newFilesData, setNewFilesData] = useState([]); /// New files to upload
   const [formData, setFormData] = useState({}); /// Data to fill the form field
+  /// Modals
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [imageIdToDelete, setImageIdToDelete] = useState('');
 
   //* SET DATA ON PAGE
   useEffect(() => {
@@ -46,11 +51,10 @@ function EditArticle() {
   const { name, text } = formData;
   const files = newFilesData
 
-  //* EDIT formData BY CHANGING DATA IN FORM FIELDS
+  //* EDIT FORMDATA BY CHANGING DATA IN FORM FIELDS
   const onChange = (e) => {
     if (e.target.name === 'files') {
       const selectedFile = e.target.files;
-
       ///Add files to newFilesData
       if ((oldFilesData.length + selectedFile.length) > 5 || (oldFilesData.length + newFilesData.length) > 5) {
         toast.error('Maximum 5 files allowed for article')
@@ -68,9 +72,21 @@ function EditArticle() {
   }
 
   //* DELETE UPLOAD IMAGE
+  /// Modals settings
+  const openDeleteModal = (imageId) => {
+    setImageIdToDelete(imageId)
+    setModalIsOpen(true);
+  };
+  const closeDeleteModal = () => {
+    setModalIsOpen(false);
+    setImageIdToDelete('')
+  };
+  ///Delete old image
   const deleteOldImage = (imageId) => {
     const imageData = { articleId: id, imageId: imageId }
     dispatch(deleteImage(imageData))
+    toast.success('Article edited')
+    closeDeleteModal()
   };
 
   //* EDIT ARTICLE DATA BY SUBMIT
@@ -128,10 +144,9 @@ function EditArticle() {
                   className='editImage'
                 />
 
-                <button onClick={() => deleteOldImage(file._id)} className='articleButton editButtonDeleteImage' title="Delete old file">
+                <button onClick={() => openDeleteModal(file._id)} className='articleButton editButtonDeleteImage' title="Delete old file">
                   <RiCloseFill />
                 </button>
-
               </div>
             ))) :
             (<></>)
@@ -149,7 +164,6 @@ function EditArticle() {
                 <button onClick={() => deletePickedImage(index)} className='articleButton editButtonDeleteImage' title="Delete new file">
                   <RiCloseFill />
                 </button>
-
               </div>
             ))) :
             (<></>)
@@ -201,9 +215,22 @@ function EditArticle() {
               Save changes
             </button>
           </div>
-
         </form>
       </section>
+
+      {/* Delete Image Modal */}
+      <ReactModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeDeleteModal}
+        className="deleteArticleModal"
+        overlayClassName="deleteArticleoverlay"
+      >
+        <h3>Are you sure?</h3>
+        <div className='modalButtons'>
+          <button onClick={() => deleteOldImage(imageIdToDelete)} className='btn'>Yes</button>
+          <button onClick={closeDeleteModal} className='btn'>No</button>
+        </div>
+      </ReactModal>
     </div>
   )
 }
