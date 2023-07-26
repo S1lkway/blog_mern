@@ -171,9 +171,7 @@ export const articleSlice = createSlice({
       .addCase(editArticle.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.articles = state.articles.map((article) =>
-          article._id === action.payload._id ? action.payload : article
-        );
+        state.articles = action.payload
       })
       .addCase(editArticle.rejected, (state, action) => {
         state.isLoading = false

@@ -35,15 +35,15 @@ const getArticle = async (id, token) => {
   return response.data
 }
 
-
 //* EDIT ARTICLE
 const editArticle = async (articleData, token) => {
+  const articleId = articleData.get('id')
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   }
-  const response = await axios.put(API_URL + articleData.id, articleData, config)
+  const response = await axios.put(API_URL + articleId, articleData, config)
   return response.data
 }
 

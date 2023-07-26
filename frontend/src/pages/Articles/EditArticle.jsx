@@ -8,22 +8,24 @@ import Spinner from '../../components/Spinner'
 
 function EditArticle() {
   //* CONSTANTS FOR DATA
-  const { id } = useParams()
-  const basePath = '/uploads/articleUploads/'
+  const { id } = useParams() /// Article ID
+  const basePath = '/uploads/articleUploads/' /// Path to files on server
   const dispatch = useDispatch()
   const navigate = useNavigate()
   ///Get articleData
   useEffect(() => {
     dispatch(getArticle(id))
   }, [id, dispatch])
-  const { user } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth) /// User data from Redux
   const { articles, isLoading, isError, message } = useSelector(
     (state) => state.articles
   )
-  ///Data for FORM and FILES
-  const [oldFilesData, setOldFilesData] = useState([]);
-  const [formData, setFormData] = useState({});
-  ///Set DATA on page
+  //* DATA FOR FORM and FILES
+  const [oldFilesData, setOldFilesData] = useState([]); /// Uploaded files
+  const [newFilesData, setNewFilesData] = useState([]); /// New files to upload
+  const [formData, setFormData] = useState({}); /// Data to fill the form field
+
+  //* SET DATA ON PAGE
   useEffect(() => {
     if (isError) {
       console.log(message)
@@ -42,26 +44,27 @@ function EditArticle() {
   }, [articles, isLoading, user, navigate, isError, message, dispatch]);
 
   const { name, text } = formData;
+  const files = newFilesData
 
   //* EDIT formData BY CHANGING DATA IN FORM FIELDS
   const onChange = (e) => {
     if (e.target.name === 'files') {
-      const selectedFile = e.target.files[0];
-      console.log(selectedFile)
-      // ///Add files to oldFilesData
-      // if (oldFilesData.length > 5) {
-      //   toast.error('Maximum 5 files allowed')
-      //   setOldFilesData([])
-      // } else {
-      //   setOldFilesData((prevFiles) => [...prevFiles, ...selectedFile])
-      // }
+      const selectedFile = e.target.files;
+
+      ///Add files to newFilesData
+      if ((oldFilesData.length + selectedFile.length) > 5 || (oldFilesData.length + newFilesData.length) > 5) {
+        toast.error('Maximum 5 files allowed for article')
+        setNewFilesData([])
+      } else {
+        setNewFilesData(() => [...selectedFile])
+      }
     }
-    // else {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-    // }
+    else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value,
+      }));
+    }
   }
 
   //* DELETE UPLOAD IMAGE
@@ -73,20 +76,30 @@ function EditArticle() {
   //* EDIT ARTICLE DATA BY SUBMIT
   const onSubmit = (e) => {
     e.preventDefault()
-
+    ///Check that name and text are not empty
     if (!name || !text) {
       toast.error('Add all fields')
     } else {
-      const articleData = {
-        id,
-        name,
-        text,
-      }
-      /// We send data from form to articleSlice to createArticle function and there to server by articleService
+      ///We make FormData object to send data with pictures to backend
+      const articleData = new FormData();
+      articleData.append('id', id);
+      articleData.append('name', name);
+      articleData.append('text', text);
+      files.forEach((file) => articleData.append('images', file));
       dispatch(editArticle(articleData))
+      setNewFilesData([])
       toast.success('Article edited')
     }
   }
+
+  //* DELETE PICKED IMAGE
+  const deletePickedImage = (index) => {
+    ///Make example of filesData and delete file by index
+    const pickedFiles = [...newFilesData];
+    pickedFiles.splice(index, 1);
+    ///Set new filesData
+    setNewFilesData(pickedFiles);
+  };
 
   //* LOADING SPINNER
   if (isLoading) {
@@ -99,7 +112,7 @@ function EditArticle() {
         <h1>
           <RiEdit2Line />Edit article
         </h1>
-        <p>Save to change article data</p>
+        <p>Save to change data and upload new images</p>
       </section>
 
       {/* Images to display and delete */}
@@ -115,7 +128,25 @@ function EditArticle() {
                   className='editImage'
                 />
 
-                <button onClick={() => deleteOldImage(file._id)} className='articleButton editButtonDeleteImage' title="Delete file">
+                <button onClick={() => deleteOldImage(file._id)} className='articleButton editButtonDeleteImage' title="Delete old file">
+                  <RiCloseFill />
+                </button>
+
+              </div>
+            ))) :
+            (<></>)
+          }
+          {newFilesData.length > 0 ?
+            (newFilesData.map((file, index) => (
+              <div key={index} className="editImageDiv" style={{ background: 'rgba(0, 205, 15, 0.2)' }}>
+                <img
+                  key={file._id}
+                  src={URL.createObjectURL(file)}
+                  alt={`File "${file.originalname}" wasn't found`}
+                  className='editImage'
+                />
+
+                <button onClick={() => deletePickedImage(index)} className='articleButton editButtonDeleteImage' title="Delete new file">
                   <RiCloseFill />
                 </button>
 
@@ -146,8 +177,10 @@ function EditArticle() {
               className="form-control"
               id="files"
               name="files"
+              multiple
               onChange={onChange}
               accept='image/*'
+              key={newFilesData.length}
             />
           </div>
 

@@ -68,7 +68,6 @@ const getArticle = asyncHandler(async (req, res) => {
 const editArticle = async (req, res) => {
   try {
     const article = await Article.findById(req.params.id)
-
     /// Check for user
     if (!req.user) {
       res.status(401)
@@ -84,15 +83,26 @@ const editArticle = async (req, res) => {
       res.status(400)
       throw new Error('Article is not found')
     }
-    ///Update article data
-    const updatedArticle = await Article.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
-    res.status(200).json({ updatedArticle })
+    /// Update article data
+    article.name = req.body.name;
+    article.text = req.body.text;
+    /// Add new images to the 'images' field in the article
+    if (req.files) {
+      const newImages = req.files.map((file) => ({
+        filename: file.filename,
+        originalname: file.originalname,
+        mimetype: file.mimetype,
+        size: file.size,
+      }));
+      article.images.push(...newImages);
+    }
+    /// Save the updated article
+    const updatedArticle = await article.save();
+
+    res.status(200).json(updatedArticle)
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-
 };
 
 //* desc Delete Article Image
