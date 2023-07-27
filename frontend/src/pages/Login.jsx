@@ -27,7 +27,7 @@ function Login() {
     }
 
     if (isSuccess || user) {
-      navigate('/')
+      navigate('/news')
     }
 
     /// Message after redirect if user is not authorized

@@ -20,7 +20,7 @@ function Header() {
   return (
     <header className='header'>
       <div className='logo'>
-        <Link to='/'>
+        <Link to='/news'>
           <h4><i>< FaComments /> News Feed </i></h4>
         </Link>
       </div>
