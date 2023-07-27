@@ -4,7 +4,6 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import PrivateRoutes from './utils/PrivateRoutes'
 //-Users
-import Dashboard from './pages/Dashboard/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
@@ -12,6 +11,8 @@ import Profile from './pages/Profile'
 import Articles from './pages/Articles/Articles';
 import CreateArticle from './pages/Articles/CreateArticle';
 import EditArticle from './pages/Articles/EditArticle';
+//-News
+import News from './pages/News/News';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           <Header />
 
           <Routes>
-            <Route path='/' element={<Dashboard />} />
+            <Route path='/' element={<News />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
 

@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {
   getAllNews
-} = require('../controllers/newsFeedController')
+} = require('../controllers/newsController')
 const { protect } = require('../middleware/authMiddleware')
 
 router.route('/').get(protect, getAllNews)

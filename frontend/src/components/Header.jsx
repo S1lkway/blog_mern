@@ -21,7 +21,7 @@ function Header() {
     <header className='header'>
       <div className='logo'>
         <Link to='/'>
-          <h4><i>< FaComments /> Dashboard </i></h4>
+          <h4><i>< FaComments /> News Feed </i></h4>
         </Link>
       </div>
       <ul>
