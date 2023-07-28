@@ -240,10 +240,14 @@ h3 {
 
 .article {
   background-color: #f4f4f4;
-  margin-top: 10px;
-  padding: 30px 15px 10px;
+  margin-top: 15px;
+  padding: 2rem 15px 10px;
   position: relative;
   text-align: left;
+}
+
+.articleContent h2 {
+  margin-bottom: 2rem;
 }
 
 .article .close {
@@ -272,7 +276,7 @@ h3 {
 .articleCreatedAt {
   text-align: right;
   color: #777;
-  background-color: #e0e0e0a1;
+  background-color: #f4f4f4;
   padding: 10px 10px;
   margin-bottom: 20px;
 }
@@ -294,6 +298,58 @@ h1 {
   color: #777;
 }
 
+/** NEWS PAGES                     */
+/** ****************************** */
+/** ****************************** */
+.newsItem {
+  background-color: #f4f4f4;
+  margin-top: 15px;
+  padding: 1rem;
+  position: relative;
+  text-align: left;
+}
+
+.newsItemBottom {
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #777;
+  padding: 10px 10px;
+  margin-bottom: 20px;
+}
+
+.newsItemButtons {
+  display: flex;
+  align-items: center;
+}
+
+.newsItemButtons button {
+  cursor: pointer;
+}
+
+.newsItemButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #777;
+  font-size: 18px;
+  padding: 5px 10px;
+  height: 2rem;
+  margin-right: 0.5rem;
+  border: 1px solid #777;
+  border-radius: 5px;
+
+}
+
+.newsItemButton span {
+  margin-left: 0.5rem;
+}
+
+.newsItemButtons button:hover {
+  color: #000000;
+  border: 1px solid #000000;
+}
 
 /** FORM                           */
 /** ****************************** */
@@ -368,9 +424,9 @@ h1 {
 /** ****************************** */
 /** ****************************** */
 .image-carousel {
-  width: 37%;
+  width: 33%;
   float: left;
-  margin-right: 4rem;
+  margin-right: 3rem;
 }
 
 

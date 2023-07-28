@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { FaThList } from "react-icons/fa";
+import NewsItem from './NewsItem';
 import Spinner from '../../components/Spinner'
 import { getNews, resetNews } from '../../features/news/newsSlice'
 
@@ -29,9 +30,6 @@ function News() {
       dispatch(resetNews())
     }
   }, [user, navigate, isError, message, dispatch])
-  if (news.length > 0) {
-    console.log(news)
-  }
 
   //* LOADING SPINNER
   if (isLoading) {
@@ -39,11 +37,27 @@ function News() {
   }
 
   return (
-    <section className='content'>
-      <h1>
-        <FaThList /> News
-      </h1>
-    </section>
+    <>
+      <section className='createLink'>
+        <h1>
+          <FaThList /> News
+        </h1>
+      </section>
+      <div className='news'>
+        {news.length > 0 ? (
+          <>
+            <div className='articles'>
+              {news.map((newsItem) => (
+                <NewsItem key={newsItem._id} newsItem={newsItem} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <>
+          </>
+        )}
+      </div>
+    </>
   )
 }
 

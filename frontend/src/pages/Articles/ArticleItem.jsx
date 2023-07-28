@@ -42,7 +42,7 @@ function ArticleItem({ article }) {
   return (
     <>
       <div className='article'>
-        <div className='articleName'>
+        <div className='articleContent'>
           <h2>{article.name}</h2>
           {article.images.length > 0 ? (
             <Carousel images={article.images} basePath={basePath} />
