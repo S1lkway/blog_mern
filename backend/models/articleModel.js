@@ -36,6 +36,12 @@ const articleSchema = mongoose.Schema({
   images: {
     type: [imageSchema],
   },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment',
+    },
+  ],
   likes: {
     type: Number,
     default: 0

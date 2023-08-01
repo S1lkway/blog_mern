@@ -21,7 +21,6 @@ function NewsItem({ newsItem, user }) {
 
   /// Add class for like button
   const likeButtonClass = newsItem.likedBy.includes(user._id) ? 'newsItemClickedButton' : 'newsItemNormalButton'
-
   return (
     <>
       <div className='newsItem'>
@@ -36,14 +35,20 @@ function NewsItem({ newsItem, user }) {
       </div>
       <div className='newsItemBottom'>
         <div className="newsItemButtons">
-          <button className={likeButtonClass} onClick={() => addLike(newsItem._id)}>
+          <button
+            className={likeButtonClass}
+            onClick={() => addLike(newsItem._id)}
+            title='Add like'>
             <AiFillLike />
           </button>
           {(newsItem.likes > 0) ? <span>{newsItem.likes}</span> : <span>0</span>}
-          <button className="newsItemNormalButton" onClick={() => addComment(newsItem._id)}>
+          <button
+            className="newsItemNormalButton"
+            onClick={() => addComment(newsItem._id)}
+            title='Add comment'>
             <BiSolidComment />
           </button>
-          {/* {newsItem.likes > 0 ? <span>{newsItem.likes}</span> : ''} */}
+          {newsItem.comments.length > 0 ? <span>{newsItem.comments.length}</span> : 0}
         </div>
         <h5>
           {new Date(newsItem.createdAt).toLocaleString('en-US')}
