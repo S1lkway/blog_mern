@@ -45,7 +45,6 @@ const toggleLike = asyncHandler(async (req, res) => {
 
   /// Save the updated article in the database
   const updatedArticle = await article.save();
-
   res.status(200).json(updatedArticle);
 })
 

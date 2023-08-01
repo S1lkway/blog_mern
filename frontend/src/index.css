@@ -328,6 +328,10 @@ h1 {
   cursor: pointer;
 }
 
+.newsItemButtons span {
+  margin-right: 1rem;
+}
+
 .newsItemButton {
   display: flex;
   justify-content: space-between;

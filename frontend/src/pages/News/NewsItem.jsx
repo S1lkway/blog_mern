@@ -1,9 +1,11 @@
+import { useDispatch } from 'react-redux'
 import { AiFillLike } from "react-icons/ai";
 import { BiSolidComment } from "react-icons/bi";
 import Carousel from '../../components/Carousel';
+import { likeNews } from '../../features/news/newsSlice';
 
 function NewsItem({ newsItem }) {
-
+  const dispatch = useDispatch()
   /// basePath to show picture from backend
   const basePath = '/uploads/articleUploads/'
 
@@ -14,7 +16,7 @@ function NewsItem({ newsItem }) {
 
   /// Add like
   const addLike = (newsId) => {
-    console.log(newsId)
+    dispatch(likeNews(newsId))
   }
 
   return (
@@ -31,8 +33,10 @@ function NewsItem({ newsItem }) {
       </div>
       <div className='newsItemBottom'>
         <div className="newsItemButtons">
-          <button className="newsItemButton" onClick={() => addLike(newsItem._id)}><AiFillLike />{newsItem.likes.length > 0 ? <span>{newsItem.likes}</span> : ''}</button>
-          <button className="newsItemButton" onClick={() => addComment(newsItem._id)}><BiSolidComment />{newsItem.likes.length > 0 ? <span>{newsItem.likes}</span> : ''}</button>
+          <button className="newsItemButton" onClick={() => addLike(newsItem._id)}><AiFillLike /></button>
+          {(newsItem.likes > 0) ? <span>{newsItem.likes}</span> : ''}
+          <button className="newsItemButton" onClick={() => addComment(newsItem._id)}><BiSolidComment /></button>
+          {/* {newsItem.likes > 0 ? <span>{newsItem.likes}</span> : ''} */}
         </div>
         <h5>
           {new Date(newsItem.createdAt).toLocaleString('en-US')}

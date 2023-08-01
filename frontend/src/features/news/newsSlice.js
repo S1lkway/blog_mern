@@ -28,6 +28,25 @@ export const getNews = createAsyncThunk(
   }
 )
 
+//* LIKE NEWS
+export const likeNews = createAsyncThunk(
+  'news/like',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await newsService.likeNews(id, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 //* NEWS SLICE
 export const newsSlice = createSlice({
   name: 'news',
@@ -47,6 +66,25 @@ export const newsSlice = createSlice({
         state.news = action.payload
       })
       .addCase(getNews.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      /// likeNews
+      .addCase(likeNews.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(likeNews.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        // Найдите индекс элемента с таким же _id
+        const index = state.news.findIndex((item) => item._id === action.payload._id);
+        // Если индекс найден, замените элемент на новый объект из action.payload
+        if (index !== -1) {
+          state.news[index] = action.payload;
+        }
+      })
+      .addCase(likeNews.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
