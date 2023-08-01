@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { FaThList } from "react-icons/fa";
 import NewsItem from './NewsItem';
-import Spinner from '../../components/Spinner'
+// import Spinner from '../../components/Spinner'
 import { getNews, resetNews } from '../../features/news/newsSlice'
 
 function News() {
@@ -12,7 +12,7 @@ function News() {
 
   //* CONSTANTS FOR DATA
   const { user } = useSelector((state) => state.auth)
-  const { news, isLoading, isError, message } = useSelector(
+  const { news, isError, message } = useSelector(
     (state) => state.news
   )
 
@@ -32,9 +32,9 @@ function News() {
   }, [user, navigate, isError, message, dispatch])
 
   //* LOADING SPINNER
-  if (isLoading) {
-    return <Spinner />
-  }
+  // if (isLoading) {
+  //   return <Spinner />
+  // }
 
   return (
     <>
@@ -48,7 +48,7 @@ function News() {
           <>
             <div className='articles'>
               {news.map((newsItem) => (
-                <NewsItem key={newsItem._id} newsItem={newsItem} />
+                <NewsItem key={newsItem._id} newsItem={newsItem} user={user} />
               ))}
             </div>
           </>

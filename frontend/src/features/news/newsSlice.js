@@ -77,9 +77,9 @@ export const newsSlice = createSlice({
       .addCase(likeNews.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        // Найдите индекс элемента с таким же _id
+        // Find index of element with the same _id
         const index = state.news.findIndex((item) => item._id === action.payload._id);
-        // Если индекс найден, замените элемент на новый объект из action.payload
+        // If index was found we change that element by new one from action
         if (index !== -1) {
           state.news[index] = action.payload;
         }

@@ -4,7 +4,7 @@ import { BiSolidComment } from "react-icons/bi";
 import Carousel from '../../components/Carousel';
 import { likeNews } from '../../features/news/newsSlice';
 
-function NewsItem({ newsItem }) {
+function NewsItem({ newsItem, user }) {
   const dispatch = useDispatch()
   /// basePath to show picture from backend
   const basePath = '/uploads/articleUploads/'
@@ -18,6 +18,9 @@ function NewsItem({ newsItem }) {
   const addLike = (newsId) => {
     dispatch(likeNews(newsId))
   }
+
+  /// Add class for like button
+  const likeButtonClass = newsItem.likedBy.includes(user._id) ? 'newsItemClickedButton' : 'newsItemNormalButton'
 
   return (
     <>
@@ -33,9 +36,13 @@ function NewsItem({ newsItem }) {
       </div>
       <div className='newsItemBottom'>
         <div className="newsItemButtons">
-          <button className="newsItemButton" onClick={() => addLike(newsItem._id)}><AiFillLike /></button>
-          {(newsItem.likes > 0) ? <span>{newsItem.likes}</span> : ''}
-          <button className="newsItemButton" onClick={() => addComment(newsItem._id)}><BiSolidComment /></button>
+          <button className={likeButtonClass} onClick={() => addLike(newsItem._id)}>
+            <AiFillLike />
+          </button>
+          {(newsItem.likes > 0) ? <span>{newsItem.likes}</span> : <span>0</span>}
+          <button className="newsItemNormalButton" onClick={() => addComment(newsItem._id)}>
+            <BiSolidComment />
+          </button>
           {/* {newsItem.likes > 0 ? <span>{newsItem.likes}</span> : ''} */}
         </div>
         <h5>

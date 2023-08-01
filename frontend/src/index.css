@@ -326,34 +326,33 @@ h1 {
 
 .newsItemButtons button {
   cursor: pointer;
-}
-
-.newsItemButtons span {
-  margin-right: 1rem;
-}
-
-.newsItemButton {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #777;
   font-size: 18px;
   padding: 5px 10px;
   height: 2rem;
   margin-right: 0.5rem;
-  border: 1px solid #777;
   border-radius: 5px;
-
-}
-
-.newsItemButton span {
-  margin-left: 0.5rem;
 }
 
 .newsItemButtons button:hover {
   color: #000000;
   border: 1px solid #000000;
 }
+
+.newsItemButtons span {
+  margin-right: 1rem;
+}
+
+.newsItemNormalButton {
+  color: #777;
+  border: 1px solid #777;
+}
+
+.newsItemClickedButton {
+  color: #000000;
+  border: 1px solid #000000;
+}
+
+
 
 /** FORM                           */
 /** ****************************** */
