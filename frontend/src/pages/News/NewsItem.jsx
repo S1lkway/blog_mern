@@ -54,6 +54,34 @@ function NewsItem({ newsItem, user }) {
           {new Date(newsItem.createdAt).toLocaleString('en-US')}
         </h5>
       </div>
+      <div className='newsItemComments'>
+        <form className='commentForm'>
+          <div className="form-group commentDiv">
+            <input
+              type="text"
+              id="text"
+              name='text'
+              // value={name}
+              placeholder='Enter your comment'
+            // onChange={onChange}
+            />
+          </div>
+          <div className="form-group AddCommentButton">
+            <button type='submit' className='btn'>
+              Add
+            </button>
+          </div>
+        </form>
+        {newsItem.comments.length > 0 ? (
+          newsItem.comments.map((news) => (
+            <div key={news._id} className='commentItem'>
+              <h4 className='commentUser'>Имя</h4>
+              <span className='commentText'>{news.text}</span>
+              <p className='commentDate'>{new Date(news.createdAt).toLocaleString('en-US')}</p>
+            </div>
+          ))
+        ) : ''}
+      </div>
     </>
   )
 }

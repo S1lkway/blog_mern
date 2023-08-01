@@ -316,7 +316,6 @@ h1 {
   align-items: center;
   color: #777;
   padding: 10px 10px;
-  margin-bottom: 20px;
 }
 
 .newsItemButtons {
@@ -352,7 +351,29 @@ h1 {
   border: 1px solid #000000;
 }
 
+.newsItemComments {
+  background-color: #f4f4f4;
+  padding: 1rem 2rem;
+  margin: 5px 2rem 3rem;
+}
 
+.commentForm {
+  display: flex;
+  align-items: center;
+}
+
+.commentDiv {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.AddCommentButton {
+  padding-bottom: 10px;
+}
+
+.commentItem {
+  text-align: left;
+}
 
 /** FORM                           */
 /** ****************************** */
