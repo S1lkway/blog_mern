@@ -384,7 +384,7 @@ h1 {
 .commentsList {
   max-height: 400px;
   overflow: auto;
-  padding: 0rem 1rem 1rem;
+  padding: 0rem 1rem 1rem 1rem;
   margin: 0rem 3rem 2rem;
   background-color: #f4f4f468;
 }
@@ -400,6 +400,20 @@ h1 {
   align-items: center;
 }
 
+.commentHeader button {
+  display: none;
+}
+
+.commentItem:hover .commentHeader button {
+  display: block;
+}
+
+.commentBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .commentDate {
   font-size: 11px;
   font-weight: 600;
@@ -407,8 +421,21 @@ h1 {
 }
 
 .commentText {
-  margin: 10px 0px;
+  margin: 10px 0px 5px;
   font-size: 14px;
+}
+
+.commentButton {
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #777;
+}
+
+.commentButton:hover {
+  color: #000000;
 }
 
 /** FORM                           */

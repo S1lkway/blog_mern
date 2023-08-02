@@ -5,6 +5,7 @@ import { BiSolidComment } from "react-icons/bi";
 import { toast } from 'react-toastify'
 import Carousel from '../../components/Carousel';
 import { likeNews, addComment } from '../../features/news/newsSlice';
+import NewsComment from './NewsComment';
 
 function NewsItem({ newsItem, user }) {
   const dispatch = useDispatch()
@@ -97,19 +98,8 @@ function NewsItem({ newsItem, user }) {
         {/* COMMENTS */}
         <div className='commentsList'>
           {newsItem.comments.length > 0 ? (
-            newsItem.comments.map((comment) => (
-              <div key={comment._id}>
-                <div className='commentItem'>
-                  <div className='commentHeader'>
-                    <h5 className='commentUser'>{comment.user.name}</h5>
-                    <span className='commentDate'>{new Date(comment.createdAt).toLocaleString('en-US')}</span>
-                  </div>
-                  <p className='commentText'>
-                    {comment.text}
-                  </p>
-                </div >
-                <hr />
-              </div>
+            newsItem.comments.map((commentData) => (
+              <NewsComment key={commentData._id} commentData={commentData} />
             ))
           ) : ''}
         </div>
