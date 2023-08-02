@@ -46,7 +46,6 @@ h3 {
 
 .form-group input[type=file] {
   content: 'Choose files';
-  /* Пустое содержимое, чтобы избежать текстового отображения */
   display: inline-block;
 
 }
@@ -301,12 +300,17 @@ h1 {
 /** NEWS PAGES                     */
 /** ****************************** */
 /** ****************************** */
+/*/// News main data */
 .newsItem {
   background-color: #f4f4f4;
   margin-top: 15px;
   padding: 1rem;
   position: relative;
   text-align: left;
+}
+
+.newsItem h2 {
+  margin-bottom: 2rem;
 }
 
 .newsItemBottom {
@@ -351,10 +355,17 @@ h1 {
   border: 1px solid #000000;
 }
 
+/** COMMENTS                       */
+/** ****************************** */
+/** ****************************** */
 .newsItemComments {
   background-color: #f4f4f4;
   padding: 1rem 2rem;
   margin: 5px 2rem 3rem;
+}
+
+.newsItemComments hr {
+  border-color: rgba(255, 255, 255, 0.596);
 }
 
 .commentForm {
@@ -373,6 +384,23 @@ h1 {
 
 .commentItem {
   text-align: left;
+  margin: 1rem 0rem;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentDate {
+  font-size: 11px;
+  font-weight: 600;
+  color: #777;
+}
+
+.commentText {
+  margin-bottom: 1rem;
 }
 
 /** FORM                           */

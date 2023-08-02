@@ -47,6 +47,25 @@ export const likeNews = createAsyncThunk(
   }
 )
 
+//* ADD COMMENT
+export const addComment = createAsyncThunk(
+  'news/comment',
+  async (commentData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await newsService.addComment(commentData, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 //* NEWS SLICE
 export const newsSlice = createSlice({
   name: 'news',
@@ -85,6 +104,38 @@ export const newsSlice = createSlice({
         }
       })
       .addCase(likeNews.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      /// addComment
+      .addCase(addComment.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addComment.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        // Find index of element with the same _id
+        const newsIndex = state.news.findIndex((item) => item._id === action.payload.article);
+        // If newsIndex is valid
+        if (newsIndex !== -1) {
+          // Use map to update the comments array
+          state.news = state.news.map((newsItem) => {
+            // If the news item is the one we are looking for
+            if (newsItem._id === action.payload.article) {
+              // Update the comments array
+              return {
+                ...newsItem,
+                comments: [action.payload, ...newsItem.comments],
+              };
+            } else {
+              // Leave the news item unchanged
+              return newsItem;
+            }
+          });
+        }
+      })
+      .addCase(addComment.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

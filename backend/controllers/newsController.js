@@ -7,7 +7,17 @@ const Comment = require('../models/commentModel')
 //* access Private
 const getAllNews = asyncHandler(async (req, res) => {
   // Get data of news and their comments
-  const news = await Article.find().sort({ createdAt: -1 }).populate('comments');
+  const news = await Article.find().sort({ createdAt: -1 }).populate({
+    path: 'comments',
+    populate: {
+      path: 'user',
+      model: 'User',
+      select: '_id name email',
+    },
+    options: {
+      sort: { createdAt: -1 },
+    },
+  })
   res.status(200).json(news)
 })
 
@@ -44,13 +54,23 @@ const toggleLike = asyncHandler(async (req, res) => {
 
   // Save the updated article in the database
   await article.save()
-  const updatedArticle = await Article.findById(req.params.id).populate('comments');
+  const updatedArticle = await Article.findById(req.params.id).populate({
+    path: 'comments',
+    populate: {
+      path: 'user',
+      model: 'User',
+      select: '_id name email',
+    },
+    options: {
+      sort: { createdAt: -1 },
+    },
+  });
 
   res.status(200).json(updatedArticle);
 })
 
 //* desc Add Comment for news
-//* route POST /api/news/comment
+//* route POST /api/news/comment/:id
 //* access Private
 const addComment = asyncHandler(async (req, res) => {
   // Get newsItem data from MongoDB
@@ -76,7 +96,12 @@ const addComment = asyncHandler(async (req, res) => {
     article.comments.push(newComment._id);
     // Save article
     await article.save();
-    res.status(200).json(newComment)
+    const commentReturn = await Comment.findById(newComment._id).populate({
+      path: 'user',
+      select: '_id name email',
+    })
+
+    res.status(200).json(commentReturn)
   } else {
     res.status(404)
     throw new Error('User not found')

@@ -25,9 +25,21 @@ const likeNews = async (id, token) => {
   return response.data
 }
 
+//* ADD NEW COMMENT
+const addComment = async (commentData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.post(API_URL + '/comment/' + commentData.id, commentData, config)
+  return response.data
+}
+
 const newsService = {
   getNews,
   likeNews,
+  addComment,
 }
 
 export default newsService
