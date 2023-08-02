@@ -63,7 +63,6 @@ h3 {
   margin: 0 auto;
 }
 
-
 /** REACTMODAL WINDOWS             */
 /** ****************************** */
 /** ****************************** */
@@ -176,7 +175,6 @@ h3 {
   padding-top: 15px;
 }
 
-
 /** HEADER                         */
 /** ****************************** */
 /** ****************************** */
@@ -212,7 +210,6 @@ h3 {
   margin-right: 5px;
 }
 
-
 /** HEADING                        */
 /** ****************************** */
 /** ****************************** */
@@ -226,7 +223,6 @@ h3 {
 .heading p {
   color: #828282;
 }
-
 
 /** ARTICLES PAGES                 */
 /** ****************************** */
@@ -300,17 +296,12 @@ h1 {
 /** NEWS PAGES                     */
 /** ****************************** */
 /** ****************************** */
-/*/// News main data */
 .newsItem {
   background-color: #f4f4f4;
-  margin-top: 15px;
   padding: 1rem;
   position: relative;
   text-align: left;
-}
-
-.newsItem h2 {
-  margin-bottom: 2rem;
+  border-radius: 10px 10px 0px 0px;
 }
 
 .newsItemBottom {
@@ -320,6 +311,7 @@ h1 {
   align-items: center;
   color: #777;
   padding: 10px 10px;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .newsItemButtons {
@@ -358,28 +350,43 @@ h1 {
 /** COMMENTS                       */
 /** ****************************** */
 /** ****************************** */
+/*/ Top part */
 .newsItemComments {
-  background-color: #f4f4f4;
-  padding: 1rem 2rem;
-  margin: 5px 2rem 3rem;
+  padding-top: 1.7rem;
+  padding-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .newsItemComments hr {
   border-color: rgba(255, 255, 255, 0.596);
 }
 
-.commentForm {
+.commentForm form {
   display: flex;
   align-items: center;
+  /* padding: 0rem 1rem; */
 }
 
-.commentDiv {
+.commentTextArea {
   flex: 1;
   margin-right: 10px;
 }
 
+.commentTextArea textarea {
+  resize: none;
+}
+
 .AddCommentButton {
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+}
+
+/*/ Comments list */
+.commentsList {
+  max-height: 400px;
+  overflow: auto;
+  padding: 0rem 1rem 1rem;
+  margin: 0rem 3rem 2rem;
+  background-color: #f4f4f468;
 }
 
 .commentItem {
@@ -400,7 +407,8 @@ h1 {
 }
 
 .commentText {
-  margin-bottom: 1rem;
+  margin: 10px 0px;
+  font-size: 14px;
 }
 
 /** FORM                           */
@@ -432,7 +440,6 @@ h1 {
   display: block;
   margin: 0 0 5px 3px;
 }
-
 
 /** BUTTON BTN                     */
 /** ****************************** */
@@ -507,6 +514,9 @@ h1 {
   animation: spin 1.2s linear infinite;
 }
 
+/** @keyframes                     */
+/** ------------------------------ */
+/** ------------------------------ */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -517,14 +527,15 @@ h1 {
   }
 }
 
+/** @media (max-width: 1200px)     */
+/** ------------------------------ */
+/** ------------------------------ */
 @media (max-width: 1200px) {
 
   /*/// Edit article Modal */
   .editArticleModal {
     width: 80%;
   }
-
-  /*----------------*/
 
   /*/// Image Modal */
   .modal-image {
@@ -533,10 +544,9 @@ h1 {
   }
 }
 
-
 /** @media (max-width: 768px)      */
-/** ****************************** */
-/** ****************************** */
+/** ------------------------------ */
+/** ------------------------------ */
 @media (max-width: 768px) {
   .form {
     width: 90%;
@@ -555,6 +565,14 @@ h1 {
     width: 95%;
   }
 
+  /*/// Comments  */
+  .commentForm form {
+    padding: 0rem 0rem;
+  }
+
+  .commentsList {
+    margin: 0rem 0rem 2rem;
+  }
 }
 
 /** @media (max-width: 600px)      */

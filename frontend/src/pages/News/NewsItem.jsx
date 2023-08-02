@@ -43,7 +43,7 @@ function NewsItem({ newsItem, user }) {
   const likeButtonClass = newsItem.likedBy.includes(user._id) ? 'newsItemClickedButton' : 'newsItemNormalButton'
 
   return (
-    <div className=''>
+    <>
       <div className='newsItem'>
         <h2>{newsItem.name}</h2>
         {newsItem.images.length > 0 ? (
@@ -64,7 +64,6 @@ function NewsItem({ newsItem, user }) {
           {(newsItem.likes > 0) ? <span>{newsItem.likes}</span> : <span>0</span>}
           <button
             className="newsItemNormalButton"
-            // onClick={() => addComment(newsItem._id)}
             title='Add comment'>
             <BiSolidComment />
           </button>
@@ -76,40 +75,47 @@ function NewsItem({ newsItem, user }) {
       </div>
 
       <div className='newsItemComments'>
-        <form className='commentForm' onSubmit={onSubmit}>
-          <div className="form-group commentDiv">
-            <input
-              type="text"
-              id="text"
-              name='text'
-              value={text}
-              placeholder='Enter your comment'
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group AddCommentButton">
-            <button type='submit' className='btn'>
-              Add
-            </button>
-          </div>
-        </form>
+        <div className='commentForm'>
+          <form onSubmit={onSubmit}>
+            <div className="form-group commentTextArea">
+              <textarea
+                type="text"
+                id="text"
+                name='text'
+                value={text}
+                placeholder='Enter your comment'
+                onChange={onChange}
+              />
+            </div>
+            <div className="form-group AddCommentButton">
+              <button type='submit' className='btn'>
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
         {/* COMMENTS */}
-        {newsItem.comments.length > 0 ? (
-          newsItem.comments.map((comment) => (
-            <div key={comment._id} className='commentItem'>
-              <div className='commentHeader'>
-                <h5 className='commentUser'>{comment.user.name}</h5>
-                <span className='commentDate'>{new Date(comment.createdAt).toLocaleString('en-US')}</span>
+        <div className='commentsList'>
+          {newsItem.comments.length > 0 ? (
+            newsItem.comments.map((comment) => (
+              <div key={comment._id}>
+                <div className='commentItem'>
+                  <div className='commentHeader'>
+                    <h5 className='commentUser'>{comment.user.name}</h5>
+                    <span className='commentDate'>{new Date(comment.createdAt).toLocaleString('en-US')}</span>
+                  </div>
+                  <p className='commentText'>
+                    {comment.text}
+                  </p>
+                </div >
+                <hr />
               </div>
-              <span className='commentText'>
-                {comment.text}
-              </span>
-              <hr />
-            </div >
-          ))
-        ) : ''}
+            ))
+          ) : ''}
+        </div>
+        <hr />
       </div >
-    </div>
+    </>
   )
 }
 
