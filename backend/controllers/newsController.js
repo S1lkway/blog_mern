@@ -108,8 +108,42 @@ const addComment = asyncHandler(async (req, res) => {
   }
 })
 
+//* desc DELETE Comment of news
+//* route DELETE /api/news/comment/:id
+//* access Private
+const deleteComment = asyncHandler(async (req, res) => {
+  /// Consts 
+  // Get newsItem data from MongoDB
+  const article = await Article.findById(req.params.id)
+  // Get comment data
+  const comment = await Comment.findById(req.params.commentId)
+  /// Checks
+  // Check for article
+  if (!article) {
+    res.status(400)
+    throw new Error('Article is not found')
+  }
+  // Check for user
+  if (!req.user) {
+    res.status(401)
+    throw new Error('User is not found')
+  }
+  // Make sure the logged in user matches the article user
+  if (comment.user.toString() !== req.user.id) {
+    res.status(401)
+    throw new Error('The comment belongs to another user')
+  }
+  /// Actions
+  await comment.deleteOne()
+  article.comments = article.comments.filter((comment) => comment.toString() !== req.params.commentId);
+  await article.save();
+
+  res.status(200).json({ id: req.params.id, commentId: req.params.commentId })
+})
+
 module.exports = {
   getAllNews,
   toggleLike,
-  addComment
+  addComment,
+  deleteComment
 }

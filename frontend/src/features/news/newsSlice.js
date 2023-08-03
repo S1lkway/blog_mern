@@ -66,6 +66,25 @@ export const addComment = createAsyncThunk(
   }
 )
 
+//* DELETE COMMENT
+export const deleteComment = createAsyncThunk(
+  'news/comment/delete',
+  async (commentData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await newsService.deleteComment(commentData, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 //* NEWS SLICE
 export const newsSlice = createSlice({
   name: 'news',
@@ -136,6 +155,28 @@ export const newsSlice = createSlice({
         }
       })
       .addCase(addComment.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      /// deleteComment
+      .addCase(deleteComment.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        // Get ids and search for newsIndex to change
+        const { id, commentId } = action.payload;
+        const newsIndex = state.news.findIndex((item) => item._id === id);
+        // If news was found, delete the comment
+        if (newsIndex !== -1) {
+          state.news[newsIndex].comments = state.news[newsIndex].comments.filter(
+            (comment) => comment._id !== commentId
+          );
+        }
+      })
+      .addCase(deleteComment.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

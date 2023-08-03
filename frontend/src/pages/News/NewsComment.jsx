@@ -1,11 +1,21 @@
 import { RiCloseFill } from "react-icons/ri";
 import { HiOutlineHeart } from "react-icons/hi";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteComment } from "../../features/news/newsSlice";
 
 function NewsComment(params) {
+  const dispatch = useDispatch()
   const comment = params.commentData
   const { user } = useSelector((state) => state.auth)
 
+  //* Delete comment
+  const removeComment = (commentId) => {
+    const commentData = {
+      id: comment.article,
+      commentId: commentId
+    }
+    dispatch(deleteComment(commentData))
+  }
 
   return (
     <>
@@ -15,7 +25,11 @@ function NewsComment(params) {
           <h5 className='commentUser'>{comment.user.name}</h5>
           {/* DELETE BUTTON */}
           {user._id === comment.user._id ? (
-            <button className='commentButton' title="Delete comment">
+            <button
+              className='commentButton'
+              title="Delete comment"
+              onClick={() => removeComment(comment._id)}
+            >
               <RiCloseFill />
             </button>) : ''}
         </div>

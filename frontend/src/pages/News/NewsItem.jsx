@@ -96,14 +96,15 @@ function NewsItem({ newsItem, user }) {
           </form>
         </div>
         {/* COMMENTS */}
-        <div className='commentsList'>
-          {newsItem.comments.length > 0 ? (
-            newsItem.comments.map((commentData) => (
-              <NewsComment key={commentData._id} commentData={commentData} />
-            ))
-          ) : ''}
-        </div>
-        <hr />
+        {newsItem.comments.length > 0 ?
+          <>
+            <div className='commentsList'>
+              {newsItem.comments.map((commentData) => (
+                <NewsComment key={commentData._id} commentData={commentData} />
+              ))}
+            </div>
+          </> :
+          ''}
       </div >
     </>
   )
