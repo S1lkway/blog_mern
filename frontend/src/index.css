@@ -63,6 +63,14 @@ h3 {
   margin: 0 auto;
 }
 
+.welcomeText {
+  margin-top: 5rem;
+}
+
+.welcomeText h1 {
+  margin-bottom: 3rem;
+}
+
 .welcomeText p {
   text-align: left;
   margin-top: 20px;
