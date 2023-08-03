@@ -1,5 +1,5 @@
 import { RiCloseFill } from "react-icons/ri";
-import { HiOutlineHeart } from "react-icons/hi";
+// import { HiOutlineHeart } from "react-icons/hi";
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteComment } from "../../features/news/newsSlice";
 
@@ -40,9 +40,9 @@ function NewsComment(params) {
           <span className='commentDate'>
             {new Date(comment.createdAt).toLocaleString('en-US')}
           </span>
-          <button className='commentButton' title="Like comment">
+          {/* <button className='commentButton' title="Like comment">
             <HiOutlineHeart />
-          </button>
+          </button> */}
         </div>
 
       </div >
