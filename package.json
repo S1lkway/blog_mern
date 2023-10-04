@@ -4,6 +4,7 @@
   "description": "Blog MERN",
   "main": "server.js",
   "scripts": {
+    "build": "npm install && cd frontend && npm install && npm run build",
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
