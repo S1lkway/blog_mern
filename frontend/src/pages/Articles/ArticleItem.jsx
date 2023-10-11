@@ -50,7 +50,7 @@ function ArticleItem({ article }) {
 
           <p>{article.text}</p>
         </div>
-        <div className='close'>
+        <div className='actions'>
 
           {/* EDIT BUTTON AND MODAL */}
           <button onClick={goToEditPage} className='articleButton' title="Edit article">
